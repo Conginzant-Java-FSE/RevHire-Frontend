@@ -1,0 +1,102 @@
+/* ===== EMPLOYER DASHBOARD — Orange/Amber Executive Theme ===== */
+
+/* Top header gradient bar */
+.employer-dashboard-root::before {
+    content: '';
+    display: block;
+    height: 4px;
+    background: linear-gradient(90deg, #f97316, #f59e0b, #ef4444);
+    border-radius: 0 0 8px 8px;
+    margin-bottom: 1rem;
+    animation: shimmer-orange 3s infinite linear;
+    background-size: 200% 100%;
+}
+
+@keyframes shimmer-orange {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* Stat cards */
+.employer-dashboard-root .card {
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+    border-top: 3px solid transparent;
+}
+
+.employer-dashboard-root .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(249, 115, 22, 0.15) !important;
+    border-top-color: #f97316;
+}
+
+/* Stat numbers */
+.employer-dashboard-root h4.fw-bold {
+    background: linear-gradient(135deg, #f97316, #ef4444);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 1.8rem;
+}
+
+/* Buttons */
+.employer-dashboard-root .btn-primary,
+.employer-dashboard-root .btn-warning {
+    box-shadow: 0 4px 14px rgba(249, 115, 22, 0.3);
+    transition: all 0.2s ease;
+}
+
+.employer-dashboard-root .btn-primary:hover,
+.employer-dashboard-root .btn-warning:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(249, 115, 22, 0.45);
+}
+
+/* Job card hover */
+.employer-dashboard-root .card.job-card,
+.employer-dashboard-root .row.g-4 .card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.employer-dashboard-root .row.g-4 .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 32px rgba(249, 115, 22, 0.13) !important;
+}
+
+/* Page fade-in */
+.employer-dashboard-root {
+    animation: fadeSlideIn 0.45s ease both;
+}
+
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Active jobs badge glow */
+.employer-dashboard-root .badge.text-bg-success {
+    animation: pulse-amber 2.5s infinite;
+}
+
+@keyframes pulse-amber {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.45);
+    }
+
+    50% {
+        box-shadow: 0 0 0 6px rgba(245, 158, 11, 0);
+    }
+}

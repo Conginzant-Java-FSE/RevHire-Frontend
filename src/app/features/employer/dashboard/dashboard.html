@@ -1,1 +1,336 @@
-<p>dashboard works!</p>
+<!-- Employer Dashboard Header -->
+<div class="employer-dashboard-root container-fluid px-4 px-md-5 py-4 transition-colors"
+    [class.bg-dark]="themeService.isDarkMode()" [class.text-white]="themeService.isDarkMode()">
+
+    <!-- Top Bar -->
+    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-4 gap-3">
+        <div>
+            <div class="d-flex align-items-center gap-2 mb-1">
+                <span class="emp-dot"></span>
+                <span class="small text-uppercase fw-semibold" style="color:#3b82f6;letter-spacing:1.2px;">Employer
+                    Portal</span>
+            </div>
+            <h1 class="fw-bold mb-1" style="font-size:2rem;">Employer Dashboard</h1>
+            <p class="text-secondary mb-0 small">Manage your job postings, track applicants, and find talent</p>
+        </div>
+        <div class="d-flex gap-2">
+            <a routerLink="/employer/post-job" class="btn px-4 py-2 fw-semibold rounded-pill text-white"
+                style="background:linear-gradient(135deg,#3b82f6,#6366f1);box-shadow:0 4px 14px rgba(59,130,246,0.4);">
+                ＋ Post New Job
+            </a>
+        </div>
+    </div>
+
+    <!-- Stat Cards Row -->
+    <div class="row g-3 mb-4" *ngIf="employerStats">
+        <div class="col-6 col-md-3">
+            <div class="emp-stat-card" style="--clr:#3b82f6;--clr-soft:rgba(59,130,246,0.08);">
+                <div class="emp-stat-icon">💼</div>
+                <div class="emp-stat-val">{{ employerStats.activeJobs }}</div>
+                <div class="emp-stat-label">Active Jobs</div>
+                <div class="emp-stat-bar"></div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="emp-stat-card" style="--clr:#6366f1;--clr-soft:rgba(99,102,241,0.1);">
+                <div class="emp-stat-icon">📋</div>
+                <div class="emp-stat-val">{{ employerStats.totalApplications }}</div>
+                <div class="emp-stat-label">Total Applications</div>
+                <div class="emp-stat-bar"></div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="emp-stat-card" style="--clr:#22c55e;--clr-soft:rgba(34,197,94,0.1);">
+                <div class="emp-stat-icon">🔔</div>
+                <div class="emp-stat-val">{{ employerStats.newApplications }}</div>
+                <div class="emp-stat-label">New Applications</div>
+                <div class="emp-stat-bar"></div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="emp-stat-card" style="--clr:#06b6d4;--clr-soft:rgba(6,182,212,0.1);">
+                <div class="emp-stat-icon">✅</div>
+                <div class="emp-stat-val">{{ employerStats.filledPositions }}</div>
+                <div class="emp-stat-label">Filled Positions</div>
+                <div class="emp-stat-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analytics + Locations -->
+    <div class="row g-3 mb-4" *ngIf="jobAnalytics">
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-sm rounded-4 p-4 h-100" [class.bg-dark]="themeService.isDarkMode()"
+                [class.border]="themeService.isDarkMode()" [class.border-secondary]="themeService.isDarkMode()">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <span style="font-size:1.2rem;">📊</span>
+                    <span class="fw-semibold">Job Analytics</span>
+                </div>
+                <div class="row g-3 text-center">
+                    <div class="col-4">
+                        <div class="fw-bold" style="font-size:1.6rem;color:#3b82f6;">{{ jobAnalytics.totalJobs }}</div>
+                        <div class="small text-secondary">Total</div>
+                    </div>
+                    <div class="col-4">
+                        <div class="fw-bold" style="font-size:1.6rem;color:#22c55e;">{{ jobAnalytics.openJobs }}</div>
+                        <div class="small text-secondary">Open</div>
+                    </div>
+                    <div class="col-4">
+                        <div class="fw-bold" style="font-size:1.6rem;color:#6366f1;">{{ jobAnalytics.filledJobs }}</div>
+                        <div class="small text-secondary">Filled</div>
+                    </div>
+                </div>
+                <div class="mt-3 pt-2 border-top" [class.border-secondary]="themeService.isDarkMode()">
+                    <p class="small text-secondary mb-0">{{ activitySummary || 'No recent activity metrics.' }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="card border-0 shadow-sm rounded-4 p-4 h-100" [class.bg-dark]="themeService.isDarkMode()"
+                [class.border]="themeService.isDarkMode()" [class.border-secondary]="themeService.isDarkMode()">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <span style="font-size:1.2rem;">📍</span>
+                    <span class="fw-semibold">Top Job Locations</span>
+                </div>
+                <div *ngIf="topLocationEntries.length === 0" class="small text-secondary">No location distribution yet.
+                </div>
+                <div *ngFor="let item of topLocationEntries; let i = index" class="mb-2">
+                    <div class="d-flex justify-content-between small mb-1">
+                        <span>{{ item[0] }}</span>
+                        <strong>{{ item[1] }}</strong>
+                    </div>
+                    <div class="progress" style="height:6px;border-radius:99px;">
+                        <div class="progress-bar"
+                            [style.width.%]="topLocationEntries.length ? (+item[1] / +topLocationEntries[0][1]) * 100 : 0"
+                            [style.background]="i === 0 ? '#3b82f6' : i === 1 ? '#6366f1' : '#22c55e'"
+                            role="progressbar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="isLoading" class="d-flex justify-content-center py-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && jobs.length === 0" class="card border-1 border-dashed p-5 text-center mt-4 bg-transparent"
+        [class.border-secondary]="themeService.isDarkMode()">
+        <div class="card-body">
+            <svg class="mx-auto text-secondary opacity-50 mb-3" style="width: 48px; height: 48px;" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+            </svg>
+            <h3 class="h5 fw-medium mb-2" [class.text-white]="themeService.isDarkMode()">No jobs posted yet</h3>
+            <p class="text-secondary mb-4">Get started by creating your first job listing.</p>
+            <a routerLink="/employer/post-job" class="btn btn-primary px-4 rounded-pill">Post a Job</a>
+        </div>
+    </div>
+
+    <!-- Jobs Table -->
+    <div *ngIf="!isLoading && jobs.length > 0" class="card border-0 shadow-sm rounded-4 overflow-hidden"
+        [class.bg-dark]="themeService.isDarkMode()" [class.border]="themeService.isDarkMode()"
+        [class.border-secondary]="themeService.isDarkMode()">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0" [class.table-dark]="themeService.isDarkMode()">
+                <thead class="bg-light" [class.bg-dark]="themeService.isDarkMode()">
+                    <tr>
+                        <th scope="col" class="text-secondary small fw-medium text-uppercase px-4 py-3 border-bottom-0">
+                            Job Title</th>
+                        <th scope="col" class="text-secondary small fw-medium text-uppercase px-4 py-3 border-bottom-0">
+                            Status</th>
+                        <th scope="col" class="text-secondary small fw-medium text-uppercase px-4 py-3 border-bottom-0">
+                            Posted Date</th>
+                        <th scope="col" class="text-secondary small fw-medium text-uppercase px-4 py-3 border-bottom-0">
+                            Type / Location</th>
+                        <th scope="col" class="px-4 py-3 border-bottom-0 text-end"><span
+                                class="visually-hidden">Actions</span></th>
+                    </tr>
+                </thead>
+                <tbody class="border-top-0">
+                    <tr *ngFor="let job of jobs">
+
+                        <td class="px-4 py-3 border-bottom border-secondary border-opacity-10">
+                            <div class="fw-bold text-body" [class.text-white]="themeService.isDarkMode()">{{ job.title
+                                }}</div>
+                            <div class="small text-secondary">{{ job.viewsCount }} views | {{ job.applicationCount || 0
+                                }} applicants</div>
+                        </td>
+
+                        <td class="px-4 py-3 border-bottom border-secondary border-opacity-10">
+                            <span class="badge rounded-pill px-3 py-1" [ngClass]="{
+                                    'text-bg-success': job.status === jobStatusEnum.OPEN,
+                                    'text-bg-secondary': job.status === jobStatusEnum.CLOSED,
+                                    'text-bg-primary': job.status === jobStatusEnum.FILLED
+                                }" style="font-size:0.72rem;">
+                                {{ job.status }}
+                            </span>
+                        </td>
+
+                        <td class="px-4 py-3 border-bottom border-secondary border-opacity-10 small text-secondary">
+                            {{ job.createdAt | date:'mediumDate' }}
+                        </td>
+
+                        <td class="px-4 py-3 border-bottom border-secondary border-opacity-10 small text-secondary">
+                            {{ job.jobType.replace('_', ' ') }} <br> <span class="opacity-75">{{ job.location }}</span>
+                        </td>
+
+                        <td class="px-4 py-3 border-bottom border-secondary border-opacity-10 text-end">
+                            <div class="d-inline-flex gap-3 align-items-center">
+                                <button (click)="updateStatus(job, jobStatusEnum.CLOSED)"
+                                    *ngIf="job.status === jobStatusEnum.OPEN"
+                                    class="btn btn-link text-secondary text-decoration-none p-0 small fw-medium">
+                                    Close
+                                </button>
+                                <button (click)="updateStatus(job, jobStatusEnum.FILLED)"
+                                    *ngIf="job.status === jobStatusEnum.OPEN"
+                                    class="btn btn-link text-success text-decoration-none p-0 small fw-medium">
+                                    Mark Filled
+                                </button>
+                                <button (click)="updateStatus(job, jobStatusEnum.OPEN)"
+                                    *ngIf="job.status !== jobStatusEnum.OPEN"
+                                    class="btn btn-link text-primary text-decoration-none p-0 small fw-medium">
+                                    Re-open
+                                </button>
+                                <a [routerLink]="['/employer/jobs', job.id, 'applicants']"
+                                    class="btn btn-outline-primary btn-sm rounded-pill px-3">
+                                    Applicants
+                                </a>
+                                <button (click)="duplicateJob(job)"
+                                    class="btn btn-outline-secondary btn-sm rounded-pill px-3">
+                                    Duplicate
+                                </button>
+                            </div>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ===== Find Seekers Section ===== -->
+    <div class="mt-5 pt-2">
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-4 gap-2">
+            <div>
+                <h2 class="h4 fw-bold mb-1">Find Job Seekers</h2>
+                <p class="text-secondary small mb-0">Filter all registered seekers by skills or experience</p>
+            </div>
+        </div>
+
+        <!-- Filters Card -->
+        <div class="card border-0 shadow-sm rounded-4 p-4 mb-4" [class.bg-dark]="themeService.isDarkMode()"
+            [class.border]="themeService.isDarkMode()" [class.border-secondary]="themeService.isDarkMode()">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-5">
+                    <label class="form-label small fw-medium text-secondary">Skills / Keywords</label>
+                    <input type="text" [(ngModel)]="seekerSearchSkills" class="form-control"
+                        [class.bg-dark]="themeService.isDarkMode()" [class.text-white]="themeService.isDarkMode()"
+                        [class.border-secondary]="themeService.isDarkMode()" placeholder="e.g. Java, Angular, Python..."
+                        (keyup.enter)="searchSeekers()">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-medium text-secondary">Min Exp (yrs)</label>
+                    <input type="number" [(ngModel)]="seekerSearchMinExp" class="form-control" min="0"
+                        [class.bg-dark]="themeService.isDarkMode()" [class.text-white]="themeService.isDarkMode()"
+                        [class.border-secondary]="themeService.isDarkMode()" placeholder="e.g. 1">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-medium text-secondary">Max Exp (yrs)</label>
+                    <input type="number" [(ngModel)]="seekerSearchMaxExp" class="form-control" min="0"
+                        [class.bg-dark]="themeService.isDarkMode()" [class.text-white]="themeService.isDarkMode()"
+                        [class.border-secondary]="themeService.isDarkMode()" placeholder="e.g. 5">
+                </div>
+                <div class="col-md-3 d-flex gap-2">
+                    <button (click)="searchSeekers()" class="btn btn-primary fw-medium flex-grow-1 rounded-pill">
+                        <svg style="width: 16px; height: 16px;" class="me-1" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                        Search
+                    </button>
+                    <button *ngIf="hasSearched" (click)="clearSearch()" class="btn btn-outline-secondary rounded-pill">
+                        Clear
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading seekers -->
+        <div *ngIf="isLoadingSeekers" class="text-center py-4">
+            <div class="spinner-border spinner-border-sm text-primary me-2" role="status"></div>
+            <span class="text-secondary small">Loading seekers...</span>
+        </div>
+
+        <!-- Results -->
+        <div *ngIf="hasSearched && !isLoadingSeekers">
+            <!-- No Results -->
+            <div *ngIf="filteredSeekers.length === 0" class="card border-0 shadow-sm rounded-4 p-5 text-center"
+                [class.bg-dark]="themeService.isDarkMode()" [class.border]="themeService.isDarkMode()"
+                [class.border-secondary]="themeService.isDarkMode()">
+                <svg class="mx-auto text-secondary opacity-50 mb-3" style="width: 40px; height: 40px;" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <p class="text-secondary mb-0">No seekers match your filters. Try adjusting the criteria.</p>
+            </div>
+
+            <!-- Seeker Cards -->
+            <div *ngIf="filteredSeekers.length > 0">
+                <p class="text-secondary small mb-3">{{ filteredSeekers.length }} seeker{{ filteredSeekers.length !== 1
+                    ? 's' : '' }} found</p>
+                <div class="row g-3">
+                    <div *ngFor="let seeker of filteredSeekers" class="col-md-6 col-lg-4">
+                        <div class="card h-100 border-0 shadow-sm rounded-4 p-4"
+                            [class.bg-dark]="themeService.isDarkMode()" [class.border]="themeService.isDarkMode()"
+                            [class.border-secondary]="themeService.isDarkMode()"
+                            [class.text-white]="themeService.isDarkMode()">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold flex-shrink-0"
+                                    style="width: 44px; height: 44px; font-size: 1.1rem;">
+                                    {{ seeker.name.charAt(0) | uppercase }}
+                                </div>
+                                <div class="overflow-hidden">
+                                    <h3 class="h6 fw-bold mb-0 text-truncate">{{ seeker.name }}</h3>
+                                    <p class="small text-secondary mb-0 text-truncate">{{ seeker.email }}</p>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-wrap gap-2 small">
+                                <span *ngIf="seeker.location" class="d-flex align-items-center gap-1 text-secondary">
+                                    <svg style="width: 13px; height: 13px;" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                    </svg>
+                                    {{ seeker.location }}
+                                </span>
+                                <span *ngIf="seeker.totalExperience !== undefined"
+                                    class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-2">
+                                    {{ seeker.totalExperience }} yr{{ seeker.totalExperience !== 1 ? 's' : '' }} exp
+                                </span>
+                                <span *ngIf="seeker.currentStatus"
+                                    class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2">
+                                    {{ seeker.currentStatus }}
+                                </span>
+                            </div>
+                            <div class="mt-3">
+                                <a class="btn btn-outline-primary btn-sm rounded-pill" [routerLink]="['/chat']"
+                                    [queryParams]="{ partnerId: seeker.id, partnerName: seeker.name, partnerRole: roleEnum.JOB_SEEKER }">
+                                    Message
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
