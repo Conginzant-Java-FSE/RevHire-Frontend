@@ -1,1 +1,62 @@
-<p>login works!</p>
+<div class="min-vh-100 d-flex align-items-center justify-content-center py-5 px-3 bg-light transition-colors"
+    [class.bg-dark]="themeService.isDarkMode()" [class.text-white]="themeService.isDarkMode()"
+    style="transition: background-color 0.3s ease;">
+
+    <div class="card shadow-lg border-0 rounded-4 w-100 p-4 p-md-5" style="max-width: 450px;"
+        [class.bg-dark]="themeService.isDarkMode()" [class.border]="themeService.isDarkMode()"
+        [class.border-secondary]="themeService.isDarkMode()">
+
+        <div class="text-center mb-4">
+            <h2 class="fw-bolder tracking-tight mb-2">Welcome back</h2>
+            <p class="text-secondary small">Sign in to your RevHire account</p>
+        </div>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+            <div class="mb-3">
+                <label for="email" class="form-label fw-medium small">Email address</label>
+                <input id="email" type="email" formControlName="email" class="form-control form-control-lg fs-6"
+                    [class.bg-dark]="themeService.isDarkMode()" [class.text-white]="themeService.isDarkMode()"
+                    [class.border-secondary]="themeService.isDarkMode()" placeholder="you@example.com" />
+                <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid"
+                    class="text-danger small mt-1">
+                    Valid email is required
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <div class="d-flex align-items-center justify-content-between mb-1">
+                    <label for="password" class="form-label fw-medium small mb-0">Password</label>
+                    <a href="#" class="text-decoration-none small text-primary fw-medium">Forgot password?</a>
+                </div>
+                <input id="password" type="password" formControlName="password"
+                    class="form-control form-control-lg fs-6" [class.bg-dark]="themeService.isDarkMode()"
+                    [class.text-white]="themeService.isDarkMode()" [class.border-secondary]="themeService.isDarkMode()"
+                    placeholder="••••••••" />
+                <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid"
+                    class="text-danger small mt-1">
+                    Password must contain 1 capital letter, 1 number, and 1 special character
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <button type="submit" [disabled]="isLoading"
+                    class="btn btn-primary btn-lg w-100 py-2 fs-6 fw-medium d-flex align-items-center justify-content-center gap-2">
+                    <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status"
+                        aria-hidden="true"></span>
+                    {{ isLoading ? 'Signing in...' : 'Sign in' }}
+                </button>
+            </div>
+
+            <div class="text-center pt-4 border-top">
+                <p class="text-secondary small mb-0">
+                    Don't have an account?
+                    <a routerLink="/auth/register" class="text-primary text-decoration-none fw-medium ms-1">
+                        Create an account
+                    </a>
+                </p>
+            </div>
+
+        </form>
+    </div>
+</div>
