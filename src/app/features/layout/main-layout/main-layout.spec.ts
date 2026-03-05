@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MainLayout } from './main-layout';
 
-describe('MainLayout', () => {
+describe('MainLayoutComponent', () => {
   let component: MainLayout;
   let fixture: ComponentFixture<MainLayout>;
 
@@ -11,10 +11,10 @@ describe('MainLayout', () => {
       imports: [MainLayout]
     })
     .compileComponents();
-
-    fixture = TestBed.createComponent(MainLayout);
+    
+    fixture = TestBed.createComponent(MainLayoutComponent);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+    fixture.detectChanges();
   });
 
   it('should create', () => {
