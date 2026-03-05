@@ -1,1 +1,170 @@
-<p>job-detail works!</p>
+<div class="container py-4 py-md-5 transition-colors" [class.bg-dark]="themeService.isDarkMode()"
+    [class.text-white]="themeService.isDarkMode()">
+
+    <!-- Back Button -->
+    <button (click)="goBack()"
+        class="btn btn-link text-secondary text-decoration-none d-flex align-items-center gap-2 p-0 mb-4 fw-medium small">
+        <svg style="width: 16px; height: 16px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Back to jobs
+    </button>
+
+    <!-- Loading -->
+    <div *ngIf="isLoading" class="d-flex flex-column gap-4 placeholder-wave">
+        <div class="placeholder bg-secondary rounded w-50" style="height: 40px;"></div>
+        <div class="placeholder bg-secondary rounded w-25" style="height: 24px;"></div>
+        <div class="placeholder bg-secondary rounded w-100" style="height: 200px;"></div>
+    </div>
+
+    <!-- Job Content -->
+    <div *ngIf="!isLoading && job" class="card border-0 shadow-sm rounded-4 overflow-hidden"
+        [class.bg-dark]="themeService.isDarkMode()" [class.border]="themeService.isDarkMode()"
+        [class.border-secondary]="themeService.isDarkMode()" [class.text-white]="themeService.isDarkMode()">
+
+        <!-- Header -->
+        <div class="card-header bg-transparent border-bottom p-4 p-md-5"
+            [class.border-secondary]="themeService.isDarkMode()">
+            <div class="d-flex flex-column flex-md-row align-items-md-start justify-content-between gap-4">
+
+                <div class="flex-grow-1">
+                    <h1 class="display-6 fw-bold tracking-tight mb-2">{{ job.title }}</h1>
+                    <div class="h5 text-primary mb-4">{{ job.companyName }}</div>
+
+                    <div class="d-flex flex-wrap align-items-center gap-3 gap-md-4 text-secondary small">
+                        <span class="d-flex align-items-center gap-2">
+                            <svg style="width: 20px; height: 20px;" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            </svg>
+                            {{ job.location }}
+                        </span>
+                        <span class="d-flex align-items-center gap-2">
+                            <svg style="width: 20px; height: 20px;" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                            {{ job.jobType.replace('_', ' ') }}
+                        </span>
+                        <span class="d-flex align-items-center gap-2">
+                            <svg style="width: 20px; height: 20px;" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            ${{ job.minSalary }} - ${{ job.maxSalary }}
+                        </span>
+                        <span class="d-flex align-items-center gap-2">
+                            <svg style="width: 20px; height: 20px;" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                            </svg>
+                            {{ job.minExperienceYears }} - {{ job.maxExperienceYears }} yrs exp
+                        </span>
+                    </div>
+                </div>
+
+                <div class="flex-shrink-0 mt-3 mt-md-0 d-grid d-md-block">
+
+                    <!-- Employer view label -->
+                    <span *ngIf="authService.isEmployer()" class="badge bg-secondary py-2 px-3 rounded-pill">Viewing as
+                        Employer</span>
+
+                    <!-- Closed job -->
+                    <button *ngIf="!authService.isEmployer() && job.status !== 'OPEN'"
+                        class="btn btn-secondary btn-lg px-4 fs-6 fw-medium rounded-3" disabled>
+                        Job Closed
+                    </button>
+
+                    <!-- Already applied state -->
+                    <ng-container *ngIf="!authService.isEmployer() && job.status === 'OPEN' && hasApplied">
+                        <div class="d-flex flex-column flex-md-row align-items-center gap-2">
+                            <span
+                                class="badge bg-success-subtle text-success border border-success rounded-pill px-3 py-2 fs-6">
+                                ✓ Already Applied
+                            </span>
+                            <button (click)="withdrawApplication()" [disabled]="isWithdrawing"
+                                class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-medium">
+                                <span *ngIf="isWithdrawing" class="spinner-border spinner-border-sm me-1"></span>
+                                {{ isWithdrawing ? 'Withdrawing...' : 'Withdraw' }}
+                            </button>
+                        </div>
+                    </ng-container>
+
+                    <!-- One-Click Apply -->
+                    <button *ngIf="!authService.isEmployer() && job.status === 'OPEN' && !hasApplied"
+                        (click)="oneClickApply()" [disabled]="isOneClickApplying || isApplying"
+                        class="btn btn-success btn-lg px-4 fs-6 fw-medium rounded-3 w-100 mb-2">
+                        <span *ngIf="isOneClickApplying" class="spinner-border spinner-border-sm me-2"></span>
+                        ⚡ One-Click Apply
+                    </button>
+
+                    <!-- Apply Now (not yet applied, job open) -->
+                    <button *ngIf="!authService.isEmployer() && job.status === 'OPEN' && !hasApplied"
+                        (click)="applyNow()" [disabled]="isApplying || isOneClickApplying"
+                        class="btn btn-primary btn-lg px-4 fs-6 fw-medium rounded-3 w-100">
+                        <span *ngIf="isApplying" class="spinner-border spinner-border-sm me-2"></span>
+                        {{ isApplying ? 'Applying...' : 'Apply Now' }}
+                    </button>
+
+                    <a *ngIf="!authService.isEmployer()" class="btn btn-outline-secondary btn-sm mt-2 w-100"
+                        [routerLink]="['/chat']"
+                        [queryParams]="{ partnerId: job.employerId, partnerName: job.companyName, partnerRole: roleEnum.EMPLOYER }">
+                        Message Employer
+                    </a>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Body text -->
+        <div class="card-body p-4 p-md-5">
+            <h3 class="h5 fw-bold mb-3">Job Description</h3>
+            <div class="mb-5 text-secondary" style="line-height: 1.7; white-space: pre-line;">
+                <p>{{ job.description }}</p>
+            </div>
+
+            <div class="border-top pt-4 mb-5" [class.border-secondary]="themeService.isDarkMode()">
+                <h3 class="h5 fw-bold mb-3">Required Skills</h3>
+                <div class="d-flex flex-wrap gap-2">
+                    <span *ngFor="let skill of (job?.skills || [])"
+                        class="badge badge-soft-secondary fw-normal px-3 py-2 rounded-pill">
+                        {{ skill }}
+                    </span>
+                    <span *ngIf="!job?.skills || job.skills.length === 0" class="text-secondary fst-italic small">
+                        No specific skills listed
+                    </span>
+                </div>
+            </div>
+
+            <!-- Meta info cards -->
+            <div class="row g-3">
+                <div class="col-sm-4">
+                    <div class="p-3 bg-light rounded-3 border" [class.bg-dark]="themeService.isDarkMode()"
+                        [class.border-secondary]="themeService.isDarkMode()">
+                        <div class="small text-secondary mb-1">Education Required</div>
+                        <div class="fw-medium">{{ job.requiredEducationLevel || 'Not Specified' }}</div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="p-3 bg-light rounded-3 border" [class.bg-dark]="themeService.isDarkMode()"
+                        [class.border-secondary]="themeService.isDarkMode()">
+                        <div class="small text-secondary mb-1">Views</div>
+                        <div class="fw-medium">{{ job.viewsCount }}</div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="p-3 bg-light rounded-3 border" [class.bg-dark]="themeService.isDarkMode()"
+                        [class.border-secondary]="themeService.isDarkMode()">
+                        <div class="small text-secondary mb-1">Application Deadline</div>
+                        <div class="fw-medium">{{ job.deadline | date:'mediumDate' }}</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
