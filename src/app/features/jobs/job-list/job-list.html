@@ -1,1 +1,272 @@
-<p>job-list works!</p>
+<div class="container py-5 transition-colors" [class.bg-dark]="themeService.isDarkMode()"
+    [class.text-white]="themeService.isDarkMode()">
+
+    <div class="mb-5">
+        <h1 class="display-6 fw-bold mb-2">Find Your Next Job</h1>
+        <p class="text-secondary mb-4">Search by title, skills, company, and apply advanced filters.</p>
+
+        <div class="card shadow-sm border-0 rounded-4 p-4" [class.bg-dark]="themeService.isDarkMode()"
+            [class.border]="themeService.isDarkMode()" [class.border-secondary]="themeService.isDarkMode()">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <input type="text" [(ngModel)]="keyword" placeholder="Job title"
+                        (ngModelChange)="triggerInstantSearch()" class="form-control form-control-lg fs-6"
+                        [class.bg-dark]="themeService.isDarkMode()" [class.text-white]="themeService.isDarkMode()"
+                        [class.border-secondary]="themeService.isDarkMode()" />
+                </div>
+
+                <div class="col-md-3">
+                    <input type="text" [(ngModel)]="skillsKeyword" placeholder="Skills (Angular, Java)"
+                        list="job-skill-options" (ngModelChange)="triggerInstantSearch()"
+                        class="form-control form-control-lg fs-6" [class.bg-dark]="themeService.isDarkMode()"
+                        [class.text-white]="themeService.isDarkMode()"
+                        [class.border-secondary]="themeService.isDarkMode()" />
+                </div>
+
+                <div class="col-md-3">
+                    <input type="text" [(ngModel)]="companyKeyword" placeholder="Company"
+                        (ngModelChange)="triggerInstantSearch()" class="form-control form-control-lg fs-6"
+                        [class.bg-dark]="themeService.isDarkMode()" [class.text-white]="themeService.isDarkMode()"
+                        [class.border-secondary]="themeService.isDarkMode()" />
+                </div>
+
+                <div class="col-md-3">
+                    <input type="text" [(ngModel)]="location" placeholder="Location" list="job-location-options"
+                        (ngModelChange)="triggerInstantSearch()" class="form-control form-control-lg fs-6"
+                        [class.bg-dark]="themeService.isDarkMode()" [class.text-white]="themeService.isDarkMode()"
+                        [class.border-secondary]="themeService.isDarkMode()" />
+                </div>
+
+                <datalist id="job-skill-options">
+                    <option *ngFor="let skill of availableSkills" [value]="skill"></option>
+                </datalist>
+                <datalist id="job-location-options">
+                    <option *ngFor="let loc of availableLocations" [value]="loc"></option>
+                </datalist>
+
+                <div class="col-md-2">
+                    <select [(ngModel)]="selectedType" class="form-select form-select-lg fs-6"
+                        (ngModelChange)="triggerInstantSearch()" [class.bg-dark]="themeService.isDarkMode()"
+                        [class.text-white]="themeService.isDarkMode()"
+                        [class.border-secondary]="themeService.isDarkMode()">
+                        <option value="">Job Type</option>
+                        <option *ngFor="let type of jobTypes" [value]="type">{{type.replace('_', ' ')}}</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <select [(ngModel)]="workMode" class="form-select form-select-lg fs-6"
+                        (ngModelChange)="triggerInstantSearch()" [class.bg-dark]="themeService.isDarkMode()"
+                        [class.text-white]="themeService.isDarkMode()"
+                        [class.border-secondary]="themeService.isDarkMode()">
+                        <option value="">Remote Mode</option>
+                        <option value="REMOTE">Remote</option>
+                        <option value="HYBRID">Hybrid</option>
+                        <option value="ONSITE">On-site</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <select [(ngModel)]="experienceLevel" class="form-select form-select-lg fs-6"
+                        (ngModelChange)="triggerInstantSearch()" [class.bg-dark]="themeService.isDarkMode()"
+                        [class.text-white]="themeService.isDarkMode()"
+                        [class.border-secondary]="themeService.isDarkMode()">
+                        <option value="">Experience</option>
+                        <option value="FRESHER">Fresher</option>
+                        <option value="MID">Mid</option>
+                        <option value="SENIOR">Senior</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <select [(ngModel)]="datePosted" class="form-select form-select-lg fs-6"
+                        (ngModelChange)="triggerInstantSearch()" [class.bg-dark]="themeService.isDarkMode()"
+                        [class.text-white]="themeService.isDarkMode()"
+                        [class.border-secondary]="themeService.isDarkMode()">
+                        <option value="">Date Posted</option>
+                        <option value="24H">Last 24 hours</option>
+                        <option value="7D">Last 7 days</option>
+                        <option value="30D">Last 30 days</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <input type="text" [(ngModel)]="industryType" placeholder="Industry / Company type"
+                        (ngModelChange)="triggerInstantSearch()" class="form-control form-control-lg fs-6"
+                        [class.bg-dark]="themeService.isDarkMode()" [class.text-white]="themeService.isDarkMode()"
+                        [class.border-secondary]="themeService.isDarkMode()" />
+                </div>
+
+                <div class="col-md-3 d-flex align-items-center gap-2">
+                    <label class="small text-secondary mb-0">Salary:</label>
+                    <input type="number" [(ngModel)]="minSalary" (ngModelChange)="triggerInstantSearch()"
+                        class="form-control" min="0" placeholder="Min" [class.bg-dark]="themeService.isDarkMode()"
+                        [class.text-white]="themeService.isDarkMode()"
+                        [class.border-secondary]="themeService.isDarkMode()" />
+                    <input type="number" [(ngModel)]="maxSalary" (ngModelChange)="triggerInstantSearch()"
+                        class="form-control" min="0" placeholder="Max" [class.bg-dark]="themeService.isDarkMode()"
+                        [class.text-white]="themeService.isDarkMode()"
+                        [class.border-secondary]="themeService.isDarkMode()" />
+                </div>
+
+                <div class="col-md-2">
+                    <select [(ngModel)]="sortBy" (ngModelChange)="triggerInstantSearch()"
+                        class="form-select form-select-lg fs-6" [class.bg-dark]="themeService.isDarkMode()"
+                        [class.text-white]="themeService.isDarkMode()"
+                        [class.border-secondary]="themeService.isDarkMode()">
+                        <option value="LATEST">Latest</option>
+                        <option value="SALARY_DESC">Salary High to Low</option>
+                        <option value="MOST_APPLIED">Most Applied</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2 d-grid">
+                    <button (click)="onSearch()" class="btn btn-primary btn-lg fs-6 fw-medium">Search</button>
+                </div>
+
+                <div class="col-md-2 d-grid">
+                    <button (click)="clearFilters()" class="btn btn-outline-secondary btn-lg fs-6">Clear</button>
+                </div>
+                <div class="col-md-2 d-grid">
+                    <button (click)="saveCurrentPreset()" class="btn btn-outline-primary btn-lg fs-6">Save
+                        Preset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <!-- Results Toolbar -->
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4 pb-3 border-bottom"
+            [class.border-secondary]="themeService.isDarkMode()">
+
+            <!-- Left: results count -->
+            <div class="d-flex align-items-center gap-2">
+                <span class="fw-bold" style="font-size:1.1rem;">
+                    {{ isLoading ? 'Searching...' : jobs.length + ' Jobs Found' }}
+                </span>
+                <span *ngIf="!isLoading && jobs.length > 0" class="badge rounded-pill text-white"
+                    style="background:#00df9a;font-size:0.72rem;">
+                    {{ jobs.length }}
+                </span>
+            </div>
+
+            <!-- Right: quick-access chips -->
+            <div class="d-flex flex-wrap align-items-center gap-2">
+
+                <!-- Recent Searches -->
+                <ng-container *ngIf="searchHistory.length">
+                    <span class="small text-secondary me-1">Recent:</span>
+                    <button *ngFor="let term of searchHistory.slice(0,3)"
+                        class="btn btn-sm btn-outline-secondary rounded-pill px-3" style="font-size:0.75rem;"
+                        (click)="keyword = term; triggerInstantSearch()">🔍 {{ term }}</button>
+                </ng-container>
+
+                <!-- Recently Viewed -->
+                <ng-container *ngIf="recentlyViewedJobs.length">
+                    <span class="vr opacity-25 mx-1"></span>
+                    <span class="small text-secondary me-1">Viewed:</span>
+                    <a *ngFor="let job of recentlyViewedJobs.slice(0,3)" [routerLink]="['/jobs', job.id]"
+                        (click)="markRecentlyViewed(job.id)" class="badge text-decoration-none rounded-pill border"
+                        style="font-size:0.75rem;background:transparent;color:inherit;border-color:#dee2e6!important;padding:5px 10px;">
+                        {{ job.title }}
+                    </a>
+                </ng-container>
+
+                <!-- Saved Presets -->
+                <ng-container *ngIf="savedPresets.length">
+                    <span class="vr opacity-25 mx-1"></span>
+                    <span class="small text-secondary me-1">Presets:</span>
+                    <span *ngFor="let preset of savedPresets" class="d-inline-flex align-items-center gap-1"
+                        style="font-size:0.75rem;background:rgba(0,223,154,0.08);border:1px solid rgba(0,223,154,0.25);border-radius:99px;padding:3px 10px;">
+                        <button class="btn btn-link btn-sm p-0 text-decoration-none"
+                            style="font-size:0.75rem;color:inherit;" (click)="applyPreset(preset)">{{ preset.name
+                            }}</button>
+                        <button class="btn btn-link btn-sm p-0 text-danger text-decoration-none"
+                            style="font-size:0.7rem;line-height:1;" (click)="removePreset(preset.name)">✕</button>
+                    </span>
+                </ng-container>
+            </div>
+        </div>
+
+        <div *ngIf="isLoading" class="d-flex flex-column gap-4">
+            <div *ngFor="let i of [1,2,3,4]" class="card border-0 shadow-sm p-4 rounded-4 placeholder-wave"
+                [class.bg-dark]="themeService.isDarkMode()" [class.border]="themeService.isDarkMode()"
+                [class.border-secondary]="themeService.isDarkMode()">
+                <div class="placeholder bg-secondary rounded w-25 mb-3" style="height: 24px;"></div>
+                <div class="placeholder bg-secondary rounded w-50 mb-4" style="height: 16px;"></div>
+            </div>
+        </div>
+
+        <div *ngIf="!isLoading && jobs.length > 0" class="d-flex flex-column gap-4">
+            <div *ngFor="let job of jobs"
+                class="card border-0 shadow-sm rounded-4 border-start border-4 border-primary job-card-animate"
+                [class.job-card-hover]="hoveredJobId === job.id" (mouseenter)="hoveredJobId = job.id"
+                (mouseleave)="hoveredJobId = null" [class.bg-dark]="themeService.isDarkMode()"
+                [class.text-white]="themeService.isDarkMode()">
+                <div class="card-body p-3 p-md-4">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h3 class="h6 fw-bold mb-1">
+                                <a [routerLink]="['/jobs', job.id]" (click)="markRecentlyViewed(job.id)"
+                                    class="text-decoration-none text-body"
+                                    [class.text-white]="themeService.isDarkMode()">
+                                    {{ job.title }}
+                                </a>
+                            </h3>
+                            <p class="text-secondary fw-medium mb-2 small">{{ job.companyName }}</p>
+
+                            <div class="d-flex flex-wrap align-items-center gap-2 text-secondary small">
+                                <span>📍 {{ job.location }}</span>
+                                <span>🗓️ {{ job.minExperienceYears }} - {{ job.maxExperienceYears }} yrs</span>
+                                <span *ngIf="job.minSalary">💰 ${{ job.minSalary | number }} - ${{ job.maxSalary |
+                                    number }}</span>
+                            </div>
+                        </div>
+
+                        <button *ngIf="authService.isJobSeeker()" class="btn btn-link text-secondary p-1 border-0"
+                            [disabled]="isSavingJobId === job.id" (click)="toggleSaveJob(job.id)"
+                            [attr.title]="isSaved(job.id) ? 'Unsave Job' : 'Save Job'">
+                            <span *ngIf="isSavingJobId === job.id" class="spinner-border spinner-border-sm"></span>
+                            <svg *ngIf="isSavingJobId !== job.id" style="width: 22px; height: 22px;"
+                                [attr.fill]="isSaved(job.id) ? 'currentColor' : 'none'" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="mt-2 d-flex flex-wrap gap-2">
+                        <span class="badge badge-soft-primary px-2 py-1 rounded-pill" style="font-size:0.73rem;">{{
+                            job.jobType.replace('_', ' ') }}</span>
+                        <span *ngIf="authService.isJobSeeker() && getSkillMatchPercent(job) > 0"
+                            class="badge text-bg-success px-2 py-1 rounded-pill" style="font-size:0.73rem;">
+                            {{ getSkillMatchPercent(job) }}% match
+                        </span>
+                        <span *ngFor="let skill of (job.skills || []).slice(0, 4)"
+                            class="badge badge-soft-secondary px-2 py-1 rounded-pill" style="font-size:0.73rem;">
+                            {{ skill }}
+                        </span>
+                    </div>
+
+                    <div class="mt-3 pt-2 border-top d-flex justify-content-between align-items-center"
+                        [class.border-secondary]="themeService.isDarkMode()">
+                        <span class="small text-secondary">Posted: {{ job.createdAt | date:'mediumDate' }}</span>
+                        <a [routerLink]="['/jobs', job.id]" (click)="markRecentlyViewed(job.id)"
+                            class="btn btn-outline-primary btn-sm px-3 rounded-pill" style="font-size:0.8rem;">View
+                            Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="!isLoading && jobs.length === 0" class="text-center py-5 bg-white border rounded-4 shadow-sm my-4"
+            [class.bg-dark]="themeService.isDarkMode()" [class.border-secondary]="themeService.isDarkMode()">
+            <h3 class="h5 fw-medium mb-2">No jobs found</h3>
+            <p class="text-secondary">Try adjusting your filters.</p>
+            <button (click)="clearFilters()" class="btn btn-outline-secondary mt-3">Clear Filters</button>
+        </div>
+
+    </div>
+</div>

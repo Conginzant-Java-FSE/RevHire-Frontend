@@ -1,0 +1,22 @@
+:host .job-card-animate {
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+  animation: cardFadeIn 0.35s ease both;
+}
+
+:host .job-card-animate:hover,
+:host .job-card-hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0, 123, 255, 0.12) !important;
+}
+
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
