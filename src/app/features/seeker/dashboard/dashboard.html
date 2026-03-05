@@ -1,1 +1,287 @@
-<p>dashboard works!</p>
+<div class="seeker-dashboard-root container py-4 py-md-5 transition-colors" [class.bg-dark]="themeService.isDarkMode()"
+    [class.text-white]="themeService.isDarkMode()">
+
+    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-4 gap-3">
+        <div>
+            <h1 class="display-6 fw-bold mb-1">My Applications</h1>
+            <p class="text-secondary mb-0">Track applications, notifications, and smart recommendations.</p>
+        </div>
+        <div>
+            <a routerLink="/jobs" class="btn btn-primary px-4 py-2 fw-medium rounded-pill">Find More Jobs</a>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm rounded-4 p-3" [class.bg-dark]="themeService.isDarkMode()"
+                [class.border]="themeService.isDarkMode()" [class.border-secondary]="themeService.isDarkMode()">
+                <p class="small text-secondary mb-1">Applied</p>
+                <h4 class="fw-bold mb-0">{{ appliedCount }}</h4>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm rounded-4 p-3" [class.bg-dark]="themeService.isDarkMode()"
+                [class.border]="themeService.isDarkMode()" [class.border-secondary]="themeService.isDarkMode()">
+                <p class="small text-secondary mb-1">Viewed / Under Review</p>
+                <h4 class="fw-bold mb-0">{{ viewedCount }}</h4>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm rounded-4 p-3" [class.bg-dark]="themeService.isDarkMode()"
+                [class.border]="themeService.isDarkMode()" [class.border-secondary]="themeService.isDarkMode()">
+                <p class="small text-secondary mb-1">Shortlisted</p>
+                <h4 class="fw-bold mb-0">{{ shortlistedCount }}</h4>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm rounded-4 p-3" [class.bg-dark]="themeService.isDarkMode()"
+                [class.border]="themeService.isDarkMode()" [class.border-secondary]="themeService.isDarkMode()">
+                <p class="small text-secondary mb-1">Unread Alerts</p>
+                <h4 class="fw-bold mb-0">{{ unreadCount }}</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm rounded-4 p-3" [class.bg-dark]="themeService.isDarkMode()"
+                [class.border]="themeService.isDarkMode()" [class.border-secondary]="themeService.isDarkMode()">
+                <p class="small text-secondary mb-1">Active Applications</p>
+                <h4 class="fw-bold mb-0">{{ activeApplicationsCount }}</h4>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm rounded-4 p-3" [class.bg-dark]="themeService.isDarkMode()"
+                [class.border]="themeService.isDarkMode()" [class.border-secondary]="themeService.isDarkMode()">
+                <p class="small text-secondary mb-1">Total Platform Applications</p>
+                <h4 class="fw-bold mb-0">{{ totalApplicationsCount }}</h4>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm rounded-4 p-3" [class.bg-dark]="themeService.isDarkMode()"
+                [class.border]="themeService.isDarkMode()" [class.border-secondary]="themeService.isDarkMode()">
+                <p class="small text-secondary mb-1">Applications Today</p>
+                <h4 class="fw-bold mb-0">{{ todayApplicationsCount }}</h4>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm rounded-4 p-3" [class.bg-dark]="themeService.isDarkMode()"
+                [class.border]="themeService.isDarkMode()" [class.border-secondary]="themeService.isDarkMode()">
+                <p class="small text-secondary mb-1">Engagement Snapshot</p>
+                <div class="small mb-0 d-flex flex-wrap gap-2">
+                    <span><span class="fw-semibold">{{ engagementTotalApps }}</span> <span class="text-secondary">Total
+                            Apps</span></span>
+                    <span class="text-secondary">|</span>
+                    <span><span class="fw-semibold text-success">{{ engagementShortlisted }}</span> <span
+                            class="text-secondary">Shortlisted</span></span>
+                    <span class="text-secondary">|</span>
+                    <span><span class="fw-semibold text-danger">{{ engagementRejected }}</span> <span
+                            class="text-secondary">Rejected</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm rounded-4 h-100" [class.bg-dark]="themeService.isDarkMode()"
+                [class.border]="themeService.isDarkMode()" [class.border-secondary]="themeService.isDarkMode()">
+                <div class="card-header bg-transparent d-flex justify-content-between align-items-center"
+                    [class.border-secondary]="themeService.isDarkMode()">
+                    <h3 class="h6 fw-bold mb-0">Alerts and Notifications</h3>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-link btn-sm p-0" (click)="markAllNotificationsRead()">Mark all as
+                            read</button>
+                        <button class="btn btn-link btn-sm p-0 text-danger" (click)="clearAllNotifications()">Clear
+                            all</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div *ngIf="notifications.length === 0" class="text-secondary small">No notifications yet.</div>
+                    <div *ngFor="let group of groupedNotifications.slice(0, 3)" class="mb-3">
+                        <p class="small text-secondary fw-semibold mb-2">{{ group.label }}</p>
+                        <div *ngFor="let note of group.items.slice(0, 3)" class="border rounded-3 p-2 mb-2"
+                            [class.border-secondary]="themeService.isDarkMode()">
+                            <div class="d-flex justify-content-between align-items-start gap-2">
+                                <div>
+                                    <p class="mb-1 small" [class.fw-bold]="!note.isRead">{{ note.message }}</p>
+                                    <p class="mb-0 text-secondary" style="font-size: 0.75rem;">{{ note.createdAt |
+                                        date:'short' }}</p>
+                                </div>
+                                <div class="d-flex gap-1">
+                                    <button *ngIf="!note.isRead" class="btn btn-outline-primary btn-sm"
+                                        (click)="markNotificationRead(note)">Read</button>
+                                    <button *ngIf="note.isRead" class="btn btn-outline-secondary btn-sm"
+                                        (click)="markNotificationUnread(note)">Unread</button>
+                                    <button class="btn btn-outline-danger btn-sm"
+                                        (click)="deleteNotification(note)">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm rounded-4 h-100" [class.bg-dark]="themeService.isDarkMode()"
+                [class.border]="themeService.isDarkMode()" [class.border-secondary]="themeService.isDarkMode()">
+                <div class="card-header bg-transparent" [class.border-secondary]="themeService.isDarkMode()">
+                    <h3 class="h6 fw-bold mb-0">Alert Preferences</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="emailAlerts" [(ngModel)]="emailAlerts">
+                        <label class="form-check-label" for="emailAlerts">Job alerts via email</label>
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="pushAlerts" [(ngModel)]="pushAlerts">
+                        <label class="form-check-label" for="pushAlerts">App push notifications</label>
+                    </div>
+                    <button class="btn btn-outline-primary btn-sm" (click)="saveAlertPreferences()">Save Alert
+                        Settings</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm rounded-4 h-100" [class.bg-dark]="themeService.isDarkMode()"
+                [class.border]="themeService.isDarkMode()" [class.border-secondary]="themeService.isDarkMode()">
+                <div class="card-header bg-transparent" [class.border-secondary]="themeService.isDarkMode()">
+                    <h3 class="h6 fw-bold mb-0">Recent Jobs</h3>
+                </div>
+                <div class="card-body">
+                    <div *ngIf="recentJobs.length === 0" class="small text-secondary">No recent jobs available.</div>
+                    <div *ngFor="let job of recentJobs" class="border rounded-3 p-3 mb-2"
+                        [class.border-secondary]="themeService.isDarkMode()">
+                        <h4 class="h6 mb-1">{{ job.title }}</h4>
+                        <p class="small text-secondary mb-2">{{ job.companyName }} | {{ job.location }}</p>
+                        <a class="btn btn-outline-primary btn-sm" [routerLink]="['/jobs', job.id]">View Job</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm rounded-4 h-100" [class.bg-dark]="themeService.isDarkMode()"
+                [class.border]="themeService.isDarkMode()" [class.border-secondary]="themeService.isDarkMode()">
+                <div class="card-header bg-transparent" [class.border-secondary]="themeService.isDarkMode()">
+                    <h3 class="h6 fw-bold mb-0">Trending Jobs</h3>
+                </div>
+                <div class="card-body">
+                    <div *ngIf="trendingJobs.length === 0" class="small text-secondary">No trending jobs available.
+                    </div>
+                    <div *ngFor="let job of trendingJobs" class="border rounded-3 p-3 mb-2"
+                        [class.border-secondary]="themeService.isDarkMode()">
+                        <h4 class="h6 mb-1">{{ job.title }}</h4>
+                        <p class="small text-secondary mb-2">{{ job.companyName }} | {{ job.viewsCount }} views</p>
+                        <a class="btn btn-outline-primary btn-sm" [routerLink]="['/jobs', job.id]">View Job</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-4 mb-4" [class.bg-dark]="themeService.isDarkMode()"
+        [class.border]="themeService.isDarkMode()" [class.border-secondary]="themeService.isDarkMode()">
+        <div class="card-header bg-transparent" [class.border-secondary]="themeService.isDarkMode()">
+            <h3 class="h6 fw-bold mb-0">AI-Based Job Recommendations</h3>
+        </div>
+        <div class="card-body">
+            <div *ngIf="isRecommendationLoading" class="text-secondary small">Loading recommendations...</div>
+            <div *ngIf="!isRecommendationLoading && recommendedJobs.length === 0" class="text-secondary small">
+                Add more skills in your profile/resume to unlock recommendations.
+            </div>
+            <div class="row g-3" *ngIf="!isRecommendationLoading && recommendedJobs.length > 0">
+                <div class="col-md-6 col-lg-4" *ngFor="let item of recommendedJobs">
+                    <div class="border rounded-3 p-3 h-100" [class.border-secondary]="themeService.isDarkMode()">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <h4 class="h6 mb-1">{{ item.job.title }}</h4>
+                            <span class="badge text-bg-success">{{ item.score }}%</span>
+                        </div>
+                        <p class="small text-secondary mb-2">{{ item.job.companyName }}</p>
+                        <p class="small mb-2">Skill matching score + fit</p>
+                        <ul class="small mb-3">
+                            <li *ngFor="let reason of item.reasons.slice(0, 2)">{{ reason }}</li>
+                        </ul>
+                        <a [routerLink]="['/jobs', item.job.id]" class="btn btn-outline-primary btn-sm">View Job</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="isLoading" class="d-flex justify-content-center py-5">
+        <div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>
+    </div>
+
+    <div *ngIf="!isLoading && applications.length === 0"
+        class="card border-1 border-dashed p-5 text-center mt-4 bg-transparent"
+        [class.border-secondary]="themeService.isDarkMode()">
+        <div class="card-body">
+            <h3 class="h5 fw-medium mb-2" [class.text-white]="themeService.isDarkMode()">No applications found</h3>
+            <p class="text-secondary mb-4">You haven't applied to any jobs yet.</p>
+            <a routerLink="/jobs" class="btn btn-outline-primary px-4 rounded-pill">Explore Jobs</a>
+        </div>
+    </div>
+
+    <div *ngIf="!isLoading && applications.length > 0" class="row g-4">
+        <div *ngFor="let app of applications" class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm rounded-4 transition-transform"
+                [class.bg-dark]="themeService.isDarkMode()" [class.border]="themeService.isDarkMode()"
+                [class.border-secondary]="themeService.isDarkMode()" [class.text-white]="themeService.isDarkMode()">
+
+                <div class="card-body p-4 d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="pe-3">
+                            <h3 class="h6 fw-bold mb-1">
+                                <a [routerLink]="['/jobs', app.jobId]" class="text-decoration-none text-body"
+                                    [class.text-white]="themeService.isDarkMode()">
+                                    {{ app.jobTitle }}
+                                </a>
+                            </h3>
+                            <p class="small text-secondary fw-medium mb-0">{{ app.companyName }}</p>
+                        </div>
+
+                        <span class="badge rounded-pill fw-normal px-3 py-1" [ngClass]="{
+                                'text-bg-primary': app.status === appStatusEnum.APPLIED,
+                                'text-bg-warning': app.status === appStatusEnum.UNDER_REVIEW,
+                                'text-bg-success': app.status === appStatusEnum.SHORTLISTED,
+                                'text-bg-danger': app.status === appStatusEnum.REJECTED,
+                                'text-bg-secondary': app.status === appStatusEnum.WITHDRAWN
+                            }" style="font-size: 0.75rem;">
+                            {{ app.status === 'UNDER_REVIEW' ? 'Under Review' : app.status === 'APPLIED' ? 'Applied' :
+                            app.status === 'SHORTLISTED' ? 'Shortlisted' : app.status === 'REJECTED' ? 'Rejected' :
+                            'Withdrawn' }}
+                        </span>
+                    </div>
+
+                    <div class="small text-secondary mb-4 mt-auto">
+                        <p class="mb-1">Applied on: {{ app.appliedAt | date:'mediumDate' }}</p>
+                        <p class="mb-0" *ngIf="app.updatedAt !== app.appliedAt">Last updated: {{ app.updatedAt |
+                            date:'mediumDate' }}</p>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center pt-3 border-top"
+                        [class.border-secondary]="themeService.isDarkMode()">
+                        <span class="small text-secondary">Tracking: {{ app.status === appStatusEnum.UNDER_REVIEW ?
+                            'Viewed' : app.status }}</span>
+                        <div class="d-flex gap-2 align-items-center">
+                            <button (click)="viewApplicationTimeline(app)"
+                                class="btn btn-link text-primary text-decoration-none p-0 small fw-medium">Timeline</button>
+                            <button
+                                *ngIf="app.status === appStatusEnum.APPLIED || app.status === appStatusEnum.UNDER_REVIEW"
+                                (click)="withdrawApplication(app)"
+                                class="btn btn-link text-danger text-decoration-none p-0 small fw-medium">
+                                Withdraw
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
