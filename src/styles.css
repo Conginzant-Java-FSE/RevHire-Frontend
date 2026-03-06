@@ -1,1 +1,300 @@
-/* You can add global styles to this file, and also import other style files */
+/* Custom Theme Colors */
+:root,
+[data-bs-theme="light"] {
+  --rv-primary: #00df9a;
+  /* Bright Greenish Cyan */
+  --rv-primary-hover: #00b87c;
+  --rv-primary-soft: rgba(0, 223, 154, 0.1);
+
+  /* Force Bootstrap to use this hex globally for ALL primary utilities */
+  --bs-primary: #00df9a;
+  --bs-primary-rgb: 0, 223, 154;
+  --bs-primary-bg-subtle: #ccfbf1;
+  --bs-primary-text-emphasis: #00df9a;
+}
+
+[data-bs-theme="dark"] {
+  --rv-primary: #00df9a;
+  --bs-primary: #00df9a;
+  --bs-primary-rgb: 0, 223, 154;
+  --bs-primary-bg-subtle: #042f2e;
+  --bs-primary-text-emphasis: #5eead4;
+}
+
+/* Override Bootstrap Primary Colors Globally */
+.text-primary {
+  color: var(--rv-primary) !important;
+}
+
+.bg-primary {
+  background-color: var(--rv-primary) !important;
+}
+
+.border-primary {
+  border-color: var(--rv-primary) !important;
+}
+
+.btn-primary,
+.btn.btn-primary {
+  --bs-btn-bg: var(--rv-primary);
+  --bs-btn-border-color: var(--rv-primary);
+  --bs-btn-hover-bg: var(--rv-primary-hover);
+  --bs-btn-hover-border-color: var(--rv-primary-hover);
+  --bs-btn-active-bg: var(--rv-primary-hover);
+  --bs-btn-active-border-color: var(--rv-primary-hover);
+  background-color: var(--rv-primary) !important;
+  border-color: var(--rv-primary) !important;
+  color: #ffffff !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn.btn-primary:hover {
+  background-color: var(--rv-primary-hover) !important;
+  border-color: var(--rv-primary-hover) !important;
+}
+
+.btn-outline-primary {
+  color: var(--rv-primary) !important;
+  border-color: var(--rv-primary) !important;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus,
+.btn-outline-primary:active {
+  background-color: var(--rv-primary) !important;
+  border-color: var(--rv-primary) !important;
+  color: #fff !important;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #94a3b8;
+}
+
+[data-bs-theme="dark"] ::-webkit-scrollbar-thumb {
+  background-color: #475569;
+}
+
+[data-bs-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background-color: #64748b;
+}
+
+/* SweetAlert Dark Mode Overrides */
+[data-bs-theme="dark"] .swal2-popup {
+  background-color: #1e293b;
+  color: #f8fafc;
+  border: 1px solid #334155;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+[data-bs-theme="dark"] .swal2-title,
+[data-bs-theme="dark"] .swal2-html-container {
+  color: #f8fafc;
+}
+
+/* Custom Soft Badges to fix invisible text on !important overrides */
+.badge-soft-primary {
+  background-color: var(--rv-primary-soft) !important;
+  color: var(--rv-primary) !important;
+  border: 1px solid rgba(0, 223, 154, 0.2);
+}
+
+.badge-soft-secondary {
+  background-color: rgba(108, 117, 125, 0.1) !important;
+  color: #6c757d !important;
+  border: 1px solid rgba(108, 117, 125, 0.2);
+}
+
+[data-bs-theme="dark"] .badge-soft-secondary {
+  color: #cbd5e1 !important;
+  background-color: rgba(203, 213, 225, 0.1) !important;
+  border-color: rgba(203, 213, 225, 0.2) !important;
+}
+
+/* ============================================================
+   EMPLOYER DASHBOARD – Orange/Amber Executive Theme
+   ============================================================ */
+.employer-dashboard-root {
+  animation: dashFadeIn 0.4s ease both;
+}
+
+@keyframes dashFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animated accent dot next to "Employer Portal" label */
+.emp-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #3b82f6;
+  display: inline-block;
+  animation: empDotPulse 2s infinite;
+}
+
+@keyframes empDotPulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.5);
+  }
+
+  50% {
+    box-shadow: 0 0 0 7px rgba(59, 130, 246, 0);
+  }
+}
+
+/* Stat Cards */
+.emp-stat-card {
+  background: var(--clr-soft, rgba(59, 130, 246, 0.08));
+  border: 1.5px solid var(--clr, #3b82f6);
+  border-radius: 16px;
+  padding: 1.2rem 1rem 0.8rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+  cursor: default;
+}
+
+.emp-stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+.emp-stat-icon {
+  font-size: 1.6rem;
+  margin-bottom: 0.4rem;
+}
+
+.emp-stat-val {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--clr, #3b82f6);
+  line-height: 1;
+  margin-bottom: 0.2rem;
+}
+
+.emp-stat-label {
+  font-size: 0.8rem;
+  color: #6c757d;
+  font-weight: 500;
+  margin-bottom: 0.6rem;
+}
+
+.emp-stat-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  width: 65%;
+  background: var(--clr, #3b82f6);
+  border-radius: 0 99px 99px 0;
+  animation: barGrow 1s ease both;
+}
+
+@keyframes barGrow {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 65%;
+  }
+}
+
+/* Table hover accent */
+.employer-dashboard-root .table-hover tbody tr:hover td {
+  background: rgba(59, 130, 246, 0.04);
+}
+
+/* Card hover in analytics section */
+.employer-dashboard-root .card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.employer-dashboard-root .card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(59, 130, 246, 0.12) !important;
+}
+
+/* ============================================================
+   SEEKER DASHBOARD – Indigo/Teal Theme
+   ============================================================ */
+.seeker-dashboard-root {
+  animation: dashFadeIn 0.4s ease both;
+}
+
+.seeker-dashboard-root .card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.seeker-dashboard-root .card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(99, 102, 241, 0.12) !important;
+}
+
+/* Shortlisted badge pulse */
+.seeker-dashboard-root .badge.text-bg-success {
+  animation: pulseGreen 2s infinite;
+}
+
+@keyframes pulseGreen {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(25, 135, 84, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 0 0 5px rgba(25, 135, 84, 0);
+  }
+}
+
+/* ============================================================
+   JOB LIST CARD ANIMATION (global)
+   ============================================================ */
+.job-card-animate {
+  animation: cardFadeIn 0.3s ease both;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.job-card-animate:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.09) !important;
+}
+
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
