@@ -14,9 +14,8 @@ export const authGuard: CanActivateFn = (route, state) => {
       router.navigate(['/']); 
       return false;
     }
-
     if (blockedRoles && blockedRoles.includes(authService.currentUser()?.role)) {
-      router.navigate(['/employer/dashboard']); 
+      router.navigate(['/employer/dashboard']);
       return false;
     }
 
