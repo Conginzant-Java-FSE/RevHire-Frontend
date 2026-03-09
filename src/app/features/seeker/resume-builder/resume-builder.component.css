@@ -1,0 +1,115 @@
+.resume-sheet {
+  min-height: 80vh;
+}
+
+.progress-animated .progress-bar {
+  transition: width 0.6s ease;
+}
+
+.section-toggle {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+
+.collapsible {
+  max-height: 2000px;
+  opacity: 1;
+  overflow: hidden;
+  transition: max-height 0.35s ease, opacity 0.35s ease;
+}
+
+.collapsible.collapsed {
+  max-height: 0;
+  opacity: 0;
+}
+
+.fade-in-item {
+  animation: fadeInUp 0.25s ease;
+}
+
+.skill-chip {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.skill-chip:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.template-transition {
+  transition: all 0.35s ease;
+}
+
+.template-modern {
+  border-left: 5px solid #0d6efd;
+}
+
+.template-professional {
+  border-top: 5px solid #198754;
+}
+
+.template-minimal {
+  box-shadow: none !important;
+  border: 1px solid #dee2e6 !important;
+}
+
+:host-context(body.dark-mode) .resume-sheet.template-modern {
+  border-left-color: #60a5fa;
+}
+
+:host-context(body.dark-mode) .resume-sheet.template-professional {
+  border-top-color: #34d399;
+}
+
+:host-context(body.dark-mode) .resume-sheet.template-minimal {
+  border-color: #2c4a69 !important;
+}
+
+:host-context(body.dark-mode) .resume-sheet .text-secondary {
+  color: #9fb0c5 !important;
+}
+
+:host-context(body.dark-mode) .resume-sheet .badge.text-bg-light {
+  background-color: #10243a !important;
+  border-color: #2c4a69 !important;
+  color: #dbeafe !important;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media print {
+  .no-print,
+  .navbar,
+  footer,
+  .btn {
+    display: none !important;
+  }
+
+  .print-col {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+  }
+
+  .resume-sheet {
+    box-shadow: none !important;
+    border: 0 !important;
+    min-height: auto;
+  }
+}

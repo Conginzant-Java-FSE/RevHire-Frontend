@@ -1,0 +1,24 @@
+Chrome Headless 145.0.0.0 (Windows 10)]: Connected on socket 9KVx_LN99I3C4X8tAAAB with id 60115463
+...........
+ERROR: [36mError: NG04002: Cannot match any routes. URL Segment: 'auth/login'
+Error: NG04002: Cannot match any routes. URL Segment: 'auth/login'
+    at Recognizer.noMatchError (http://localhost:9876/_karma_webpack_/webpack:/node_modules/@angular/router/fesm2022/router.mjs:3780:16)
+    at selector (http://localhost:9876/_karma_webpack_/webpack:/node_modules/@angular/router/fesm2022/router.mjs:3810:28)
+    at onError (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/operators/catchError.js:10:39)
+    at OperatorSubscriber._error (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/operators/OperatorSubscriber.js:23:21)
+    at OperatorSubscriber.error (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Subscriber.js:40:18)
+    at OperatorSubscriber._error (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Subscriber.js:64:30)
+    at OperatorSubscriber.error (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Subscriber.js:40:18)
+    at OperatorSubscriber._error (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Subscriber.js:64:30)
+    at OperatorSubscriber.error (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Subscriber.js:40:18)
+    at OperatorSubscriber._error (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Subscriber.js:64:30)[39m
+........
+[31mChrome Headless 145.0.0.0 (Windows 10) SavedJobsComponent unsaveJob() should keep remaining jobs after unsave FAILED
+Chrome Headless 145.0.0.0 (Windows 10) SavedJobsComponent unsaveJob() should remove job from savedJobs list after unsave FAILED
+Chrome Headless 145.0.0.0 (Windows 10) RegisterComponent sendOtp() should set isSendingOtp to false and otpSent stays false on error FAILED
+Chrome Headless 145.0.0.0 (Windows 10) RegisterComponent sendOtp() should call authService.sendOtp with valid email and start countdown FAILED
+Chrome Headless 145.0.0.0 (Windows 10) Seeker ProfileComponent saveProfile() should call profileService.updateProfile FAILED
+Chrome Headless 145.0.0.0 (Windows 10) Seeker ProfileComponent saveProfile() should set isEditing = false on success FAILED
+Chrome Headless 145.0.0.0 (Windows 10) PostJobComponent onSubmit() should set isLoading = false on error FAILED
+Chrome Headless 145.0.0.0 (Windows 10) PostJobComponent onSubmit() should call jobService.postJob with employerId when form and skills are valid FAILED
+Chrome Headless 145.0.0.0 (Windows 10): Executed 212 of 212[31m (8 FAILED

@@ -1,0 +1,26 @@
+:host { display: block; }
+.legal-shell {
+  border: 1px solid #d6e1ef;
+  border-radius: 18px;
+  background: #f5f9ff;
+  padding: 1.1rem;
+}
+.legal-shell h2 { margin: 0 0 0.45rem; font-weight: 800; }
+.legal-shell p { margin: 0; color: #475569; }
+.card-grid {
+  margin-top: 0.8rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+.card-grid article {
+  border: 1px solid #d6e1ef;
+  border-radius: 12px;
+  background: #fff;
+  padding: 0.75rem;
+}
+.card-grid h4 { margin: 0 0 0.35rem; font-size: 0.95rem; font-weight: 700; }
+.card-grid p { margin: 0; color: #334155; font-size: 0.88rem; }
+@media (max-width: 991px) {
+  .card-grid { grid-template-columns: 1fr; }
+}

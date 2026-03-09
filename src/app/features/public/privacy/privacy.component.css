@@ -1,0 +1,17 @@
+:host { display: block; }
+.legal-shell {
+  border: 1px solid #d6e1ef;
+  border-radius: 18px;
+  background: #f5f9ff;
+  padding: 1.1rem;
+}
+.legal-shell h2 { margin: 0 0 0.45rem; font-weight: 800; }
+.legal-shell p { margin: 0; color: #475569; }
+.legal-shell ul {
+  margin: 0.85rem 0 0;
+  padding-left: 1.1rem;
+}
+.legal-shell li {
+  margin-bottom: 0.4rem;
+  color: #334155;
+}

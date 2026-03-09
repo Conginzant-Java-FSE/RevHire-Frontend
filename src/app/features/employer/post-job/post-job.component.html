@@ -1,0 +1,178 @@
+<div class="container-fluid py-4 py-md-5 transition-colors"
+    [class.bg-dark]="themeService.isDarkMode()" [class.text-white]="themeService.isDarkMode()">
+
+    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-5 gap-3">
+        <div>
+            <h2 class="display-6 fw-bold mb-1">Post a New Job</h2>
+            <p class="text-secondary mb-0">Fill out the details below to publish a new job opening.</p>
+        </div>
+        <div>
+            <a routerLink="/employer/dashboard"
+                class="btn btn-outline-secondary px-4 py-2 fw-medium rounded-pill border-2">
+                Cancel
+            </a>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden" [class.bg-dark]="themeService.isDarkMode()"
+        [class.border]="themeService.isDarkMode()" [class.border-secondary]="themeService.isDarkMode()"
+        [class.text-white]="themeService.isDarkMode()">
+
+        <form [formGroup]="jobForm" (ngSubmit)="onSubmit()" class="card-body p-4 p-md-5">
+
+            <!-- Basic Information -->
+            <div class="mb-5">
+                <h3 class="h5 fw-bold mb-1">Basic Information</h3>
+                <p class="small text-secondary mb-4">The essential details about this role.</p>
+
+                <div class="row g-4">
+                    <div class="col-md-8">
+                        <label class="form-label small fw-medium">Job Title <span class="text-danger">*</span></label>
+                        <input type="text" formControlName="title" class="form-control"
+                            placeholder="e.g. Senior Software Engineer" [class.bg-dark]="themeService.isDarkMode()"
+                            [class.text-white]="themeService.isDarkMode()"
+                            [class.border-secondary]="themeService.isDarkMode()">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label small fw-medium">Job Type <span class="text-danger">*</span></label>
+                        <select formControlName="jobType" class="form-select"
+                            [class.bg-dark]="themeService.isDarkMode()" [class.text-white]="themeService.isDarkMode()"
+                            [class.border-secondary]="themeService.isDarkMode()">
+                            <option *ngFor="let type of jobTypes" [value]="type">{{ type.replace('_', ' ') }}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label small fw-medium">Location (or "Remote") <span
+                                class="text-danger">*</span></label>
+                        <input type="text" formControlName="location" class="form-control"
+                            placeholder="City, State or Remote" [class.bg-dark]="themeService.isDarkMode()"
+                            [class.text-white]="themeService.isDarkMode()"
+                            [class.border-secondary]="themeService.isDarkMode()">
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label small fw-medium">Job Description <span
+                                class="text-danger">*</span></label>
+                        <textarea formControlName="description" rows="6" class="form-control"
+                            placeholder="Describe the responsibilities, requirements, and benefits..."
+                            [class.bg-dark]="themeService.isDarkMode()" [class.text-white]="themeService.isDarkMode()"
+                            [class.border-secondary]="themeService.isDarkMode()"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-5" [class.border-secondary]="themeService.isDarkMode()">
+
+            <!-- Requirements & Compensation -->
+            <div class="mb-5">
+                <h3 class="h5 fw-bold mb-4">Requirements & Compensation</h3>
+
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <label class="form-label small fw-medium">Required Education Level <span
+                                class="text-danger">*</span></label>
+                        <select formControlName="requiredEducationLevel" class="form-select"
+                            [class.bg-dark]="themeService.isDarkMode()" [class.text-white]="themeService.isDarkMode()"
+                            [class.border-secondary]="themeService.isDarkMode()">
+                            <option value="">Select Level</option>
+                            <option value="High School">High School</option>
+                            <option value="Associate Degree">Associate Degree</option>
+                            <option value="Bachelor's Degree">Bachelor's Degree</option>
+                            <option value="Master's Degree">Master's Degree</option>
+                            <option value="Ph.D.">Ph.D.</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label small fw-medium">Number of Openings <span
+                                class="text-danger">*</span></label>
+                        <input type="number" formControlName="numberOfOpenings" class="form-control" min="1"
+                            [class.bg-dark]="themeService.isDarkMode()" [class.text-white]="themeService.isDarkMode()"
+                            [class.border-secondary]="themeService.isDarkMode()">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label small fw-medium">Min Experience (Years)</label>
+                        <input type="number" formControlName="minExperienceYears" class="form-control" min="0"
+                            defaultValue="0" [class.bg-dark]="themeService.isDarkMode()"
+                            [class.text-white]="themeService.isDarkMode()"
+                            [class.border-secondary]="themeService.isDarkMode()">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label small fw-medium">Max Experience (Years)</label>
+                        <input type="number" formControlName="maxExperienceYears" class="form-control" min="0"
+                            [class.bg-dark]="themeService.isDarkMode()" [class.text-white]="themeService.isDarkMode()"
+                            [class.border-secondary]="themeService.isDarkMode()">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label small fw-medium">Minimum Salary (₹)</label>
+                        <input type="number" formControlName="minSalary" class="form-control" min="0"
+                            placeholder="e.g. 60000" [class.bg-dark]="themeService.isDarkMode()"
+                            [class.text-white]="themeService.isDarkMode()"
+                            [class.border-secondary]="themeService.isDarkMode()">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label small fw-medium">Maximum Salary (₹)</label>
+                        <input type="number" formControlName="maxSalary" class="form-control" min="0"
+                            placeholder="e.g. 120000" [class.bg-dark]="themeService.isDarkMode()"
+                            [class.text-white]="themeService.isDarkMode()"
+                            [class.border-secondary]="themeService.isDarkMode()">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label small fw-medium">Application Deadline <span
+                                class="text-danger">*</span></label>
+                        <input type="date" formControlName="deadline" class="form-control"
+                            [class.bg-dark]="themeService.isDarkMode()" [class.text-white]="themeService.isDarkMode()"
+                            [class.border-secondary]="themeService.isDarkMode()">
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-5" [class.border-secondary]="themeService.isDarkMode()">
+
+            <!-- Required Skills -->
+            <div class="mb-5">
+                <h3 class="h5 fw-bold mb-1">Required Skills</h3>
+                <p class="small text-secondary mb-4">Add the necessary technical or soft skills.</p>
+
+                <div class="d-flex gap-2 align-items-center mb-4">
+                    <input type="text" [(ngModel)]="skillInput" [ngModelOptions]="{standalone: true}"
+                        (keydown.enter)="addSkill(); $event.preventDefault()" class="form-control w-auto flex-grow-1"
+                        style="max-width: 300px;" placeholder="e.g. Java, Angular, Communication"
+                        [class.bg-dark]="themeService.isDarkMode()" [class.text-white]="themeService.isDarkMode()"
+                        [class.border-secondary]="themeService.isDarkMode()">
+                    <button type="button" (click)="addSkill()" class="btn btn-secondary px-4">Add</button>
+                </div>
+
+                <div class="d-flex flex-wrap gap-2">
+                    <span *ngFor="let skill of skills"
+                        class="badge badge-soft-primary fw-normal px-3 py-2 rounded-pill d-flex align-items-center gap-2">
+                        {{ skill }}
+                        <button type="button" (click)="removeSkill(skill)" class="btn-close ms-1"
+                            [class.btn-close-dark]="!themeService.isDarkMode()" style="font-size: 0.5rem;"
+                            aria-label="Remove skill"></button>
+                    </span>
+                    <p *ngIf="skills.length === 0" class="small text-secondary fst-italic mb-0 mt-2">No skills added
+                        yet.</p>
+                </div>
+            </div>
+
+            <div class="pt-4 border-top d-flex justify-content-end"
+                [class.border-secondary]="themeService.isDarkMode()">
+                <button type="submit" [disabled]="jobForm.invalid || isLoading"
+                    class="btn btn-primary btn-lg px-5 fw-medium rounded-pill">
+                    <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status"
+                        aria-hidden="true"></span>
+                    {{ isLoading ? 'Posting...' : 'Post Job' }}
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>

@@ -1,0 +1,121 @@
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.module-shell {
+  width: 100%;
+  min-height: calc(100vh - 140px);
+  border: 1px solid #cfe0f6;
+  border-radius: 24px;
+  padding: clamp(1rem, 2.3vw, 2rem);
+  background:
+    radial-gradient(circle at 12% 8%, rgba(14, 165, 233, 0.16), transparent 35%),
+    radial-gradient(circle at 88% 90%, rgba(37, 99, 235, 0.16), transparent 34%),
+    linear-gradient(160deg, #f8fbff 0%, #edf5ff 52%, #e7f1ff 100%);
+  box-shadow: 0 20px 36px rgba(15, 23, 42, 0.08);
+}
+
+.chip {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 0.26rem 0.76rem;
+  background: #dbeafe;
+  color: #1d4ed8;
+  border: 1px solid #bdd5fb;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.module-head h2 {
+  margin: 0.4rem 0 0.3rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.module-head p {
+  margin: 0;
+  color: #334155;
+}
+
+.lane-grid {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 0.9rem;
+}
+
+.lane {
+  border: 1px solid #c9dbf2;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 1rem;
+}
+
+.lane h3 {
+  margin: 0 0 0.65rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.lane ol {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: #334155;
+}
+
+.lane li {
+  margin-bottom: 0.4rem;
+}
+
+.actions {
+  margin-top: 0.8rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.actions a {
+  text-decoration: none;
+  border: 1px solid #bfd1e8;
+  background: #eff6ff;
+  color: #1d4ed8;
+  border-radius: 999px;
+  padding: 0.36rem 0.78rem;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+:host-context(body.dark-mode) .module-shell {
+  border-color: #24415f;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(45, 212, 191, 0.14), transparent 35%),
+    radial-gradient(circle at 88% 90%, rgba(59, 130, 246, 0.16), transparent 35%),
+    linear-gradient(160deg, #0a1626 0%, #0c1d31 50%, #10243a 100%);
+  box-shadow: 0 22px 40px rgba(2, 6, 23, 0.45);
+}
+
+:host-context(body.dark-mode) .chip {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(147, 197, 253, 0.35);
+  color: #bfdbfe;
+}
+
+:host-context(body.dark-mode) .module-head p,
+:host-context(body.dark-mode) .lane ol {
+  color: #b3c3d7;
+}
+
+:host-context(body.dark-mode) .lane {
+  background: #11263e;
+  border-color: #2a4868;
+  color: #dbeafe;
+}
+
+:host-context(body.dark-mode) .actions a {
+  background: #14385e;
+  border-color: #31618e;
+  color: #bfdbfe;
+}
+

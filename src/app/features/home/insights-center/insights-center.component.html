@@ -1,0 +1,42 @@
+<section class="module-shell">
+  <header class="module-head">
+    <p class="chip">Insights Center</p>
+    <h2>Track market activity and platform growth</h2>
+    <p>Use this page as the analytics entry point for both seekers and employers.</p>
+  </header>
+
+  <div class="stats-grid">
+    <article>
+      <p>Total Users</p>
+      <strong>{{ stats?.totalUsers ?? '-' }}</strong>
+    </article>
+    <article>
+      <p>Live Jobs</p>
+      <strong>{{ stats?.totalJobs ?? '-' }}</strong>
+    </article>
+    <article>
+      <p>Applications</p>
+      <strong>{{ stats?.totalApplications ?? '-' }}</strong>
+    </article>
+    <article>
+      <p>Resumes</p>
+      <strong>{{ stats?.totalResumes ?? '-' }}</strong>
+    </article>
+  </div>
+
+  <section class="trend-box">
+    <h3>Recent Trends</h3>
+    <ul *ngIf="trends.length > 0; else noData">
+      <li *ngFor="let item of trends">{{ item }}</li>
+    </ul>
+    <ng-template #noData>
+      <p class="muted">No trend data yet.</p>
+    </ng-template>
+  </section>
+
+  <div class="actions">
+    <a routerLink="/seeker/dashboard" *ngIf="authService.isAuthenticated() && authService.isJobSeeker()">Open Seeker Dashboard</a>
+    <a routerLink="/employer/dashboard" *ngIf="authService.isAuthenticated() && authService.isEmployer()">Open Employer Dashboard</a>
+    <a routerLink="/auth/login" *ngIf="!authService.isAuthenticated()">Sign in to unlock role dashboards</a>
+  </div>
+</section>

@@ -1,0 +1,49 @@
+<div class="container py-4 py-md-5 cp-page" [class.dark-ui]="themeService.isDarkMode()">
+  <button class="btn btn-outline-secondary mb-3" type="button" (click)="goBack()">Back</button>
+
+  <div *ngIf="isLoading" class="card border-0 shadow-sm p-4">
+    <div class="placeholder-glow mb-2"><span class="placeholder col-5"></span></div>
+    <div class="placeholder-glow mb-2"><span class="placeholder col-8"></span></div>
+    <div class="placeholder-glow"><span class="placeholder col-10"></span></div>
+  </div>
+
+  <div *ngIf="!isLoading && profile" class="card border-0 shadow-sm">
+    <div class="card-body p-4 p-md-5">
+      <div class="d-flex align-items-center gap-3 mb-3">
+        <img class="company-logo" [src]="getCompanyLogoUrl()" (error)="onCompanyLogoError($event)"
+          [alt]="getDisplayCompanyName() + ' logo'" />
+        <div>
+          <h1 class="h3 fw-bold mb-1">{{ getDisplayCompanyName() }}</h1>
+          <p class="text-secondary mb-0">Company Details</p>
+        </div>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <p class="small text-secondary mb-1">Industry</p>
+          <div class="fw-semibold">{{ profile.industry || 'Not provided' }}</div>
+        </div>
+        <div class="col-md-6">
+          <p class="small text-secondary mb-1">Company Size</p>
+          <div class="fw-semibold">{{ profile.companySize || 'Not provided' }}</div>
+        </div>
+        <div class="col-md-6">
+          <p class="small text-secondary mb-1">Location</p>
+          <div class="fw-semibold">{{ profile.location || 'Not provided' }}</div>
+        </div>
+        <div class="col-md-6">
+          <p class="small text-secondary mb-1">Website</p>
+          <a *ngIf="getWebsiteUrl() as site; else noSite" [href]="site" target="_blank" rel="noopener noreferrer">
+            {{ site }}
+          </a>
+          <ng-template #noSite>
+            <div class="fw-semibold">Not provided</div>
+          </ng-template>
+        </div>
+        <div class="col-12">
+          <p class="small text-secondary mb-1">Description</p>
+          <div class="fw-normal" style="white-space: pre-wrap;">{{ profile.description || 'Not provided' }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,1 +1,252 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Sora:wght@600;700;800&display=swap');
+
+:root,
+[data-bs-theme="light"] {
+  --rv-primary: #2d5ea6;
+  --rv-primary-hover: #254f8a;
+  --rv-primary-soft: rgba(45, 94, 166, 0.12);
+
+  --rv-bg: #edf2fb;
+  --rv-bg-alt: #f7f9ff;
+  --rv-surface: #ffffff;
+  --rv-text: #0f172a;
+  --rv-text-soft: #475569;
+  --rv-border: #d8e3f0;
+  --rv-shadow: 0 16px 34px rgba(15, 23, 42, 0.08);
+
+  --bs-primary: #2d5ea6;
+  --bs-primary-rgb: 45, 94, 166;
+  --bs-primary-bg-subtle: #dde6f6;
+  --bs-primary-text-emphasis: #1f4271;
+}
+
+[data-bs-theme="dark"] {
+  --rv-primary: #6f95c7;
+  --rv-primary-hover: #5f84b4;
+  --rv-primary-soft: rgba(111, 149, 199, 0.2);
+
+  --rv-bg: #06101d;
+  --rv-bg-alt: #0a1a2d;
+  --rv-surface: #0f1d31;
+  --rv-text: #e2e8f0;
+  --rv-text-soft: #9fb0c5;
+  --rv-border: #26415f;
+  --rv-shadow: 0 22px 44px rgba(2, 6, 23, 0.45);
+
+  --bs-primary: #6f95c7;
+  --bs-primary-rgb: 111, 149, 199;
+  --bs-primary-bg-subtle: #16304e;
+  --bs-primary-text-emphasis: #d5e5f9;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Manrope', 'Segoe UI', sans-serif;
+  color: var(--rv-text);
+  background:
+    radial-gradient(circle at 10% 15%, rgba(59, 130, 246, 0.14), transparent 36%),
+    radial-gradient(circle at 85% 85%, rgba(14, 165, 233, 0.1), transparent 33%),
+    linear-gradient(180deg, var(--rv-bg-alt), var(--rv-bg));
+  transition: background-color 300ms ease, color 300ms ease;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.navbar-brand,
+.brand-text {
+  font-family: 'Sora', 'Manrope', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.text-primary {
+  color: var(--rv-primary) !important;
+}
+
+.bg-primary {
+  background-color: var(--rv-primary) !important;
+}
+
+.border-primary {
+  border-color: var(--rv-primary) !important;
+}
+
+.btn {
+  border-radius: 11px;
+  font-weight: 700;
+  transition: transform 160ms ease, box-shadow 180ms ease, filter 180ms ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn-primary,
+.btn.btn-primary {
+  --bs-btn-bg: var(--rv-primary);
+  --bs-btn-border-color: var(--rv-primary);
+  --bs-btn-hover-bg: var(--rv-primary-hover);
+  --bs-btn-hover-border-color: var(--rv-primary-hover);
+  --bs-btn-active-bg: var(--rv-primary-hover);
+  --bs-btn-active-border-color: var(--rv-primary-hover);
+  background-color: var(--rv-primary) !important;
+  border-color: var(--rv-primary) !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 14px rgba(var(--bs-primary-rgb), 0.18);
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn.btn-primary:hover {
+  background-color: var(--rv-primary-hover) !important;
+  border-color: var(--rv-primary-hover) !important;
+}
+
+.post-job-btn {
+  background: #005cff !important;
+  border-color: #005cff !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 18px rgba(0, 92, 255, 0.28) !important;
+}
+
+.post-job-btn:hover,
+.post-job-btn:focus,
+.post-job-btn:active {
+  background: #004cdb !important;
+  border-color: #004cdb !important;
+  color: #ffffff !important;
+}
+
+.btn-outline-primary {
+  color: var(--rv-primary) !important;
+  border-color: var(--rv-primary) !important;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus,
+.btn-outline-primary:active {
+  background-color: var(--rv-primary) !important;
+  border-color: var(--rv-primary) !important;
+  color: #fff !important;
+}
+
+.card,
+[class*="card"],
+.auth-card,
+.reg-card,
+.hero-panel,
+.jl-card,
+.jd-main,
+.jd-sticky,
+.sd-hero,
+.cardx,
+.ed-hero {
+  box-shadow: var(--rv-shadow);
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+}
+
+a,
+.nav-link,
+.dropdown-item {
+  transition: color 160ms ease, background-color 160ms ease;
+}
+
+.form-control,
+.form-select {
+  border-color: var(--rv-border);
+  border-radius: 10px;
+  color: var(--rv-text);
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--rv-primary);
+  box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.15);
+}
+
+[data-bs-theme="dark"] .form-control,
+[data-bs-theme="dark"] .form-select {
+  background: #10243a;
+  border-color: var(--rv-border);
+  color: var(--rv-text);
+}
+
+.badge-soft-primary {
+  background-color: var(--rv-primary-soft) !important;
+  color: var(--rv-primary) !important;
+  border: 1px solid rgba(var(--bs-primary-rgb), 0.3);
+}
+
+.badge-soft-secondary {
+  background-color: rgba(108, 117, 125, 0.1) !important;
+  color: #6c757d !important;
+  border: 1px solid rgba(108, 117, 125, 0.2);
+}
+
+[data-bs-theme="dark"] .badge-soft-secondary {
+  color: #cbd5e1 !important;
+  background-color: rgba(203, 213, 225, 0.1) !important;
+  border-color: rgba(203, 213, 225, 0.2) !important;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #b7c7da;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #8ea5c0;
+}
+
+[data-bs-theme="dark"] ::-webkit-scrollbar-thumb {
+  background-color: #3a546f;
+}
+
+[data-bs-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background-color: #557391;
+}
+
+[data-bs-theme="dark"] .swal2-popup {
+  background-color: #12233a;
+  color: #f8fafc;
+  border: 1px solid #294667;
+  box-shadow: 0 20px 25px -5px rgba(2, 6, 23, 0.45), 0 10px 10px -5px rgba(2, 6, 23, 0.35);
+}
+
+[data-bs-theme="dark"] .swal2-title,
+[data-bs-theme="dark"] .swal2-html-container {
+  color: #f8fafc;
+}
+
+/* Disable app-wide motion for smoother rendering on lower-end systems. */
+*,
+*::before,
+*::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Keep content visible when motion is disabled globally. */
+.hero-animate,
+[data-reveal] {
+  opacity: 1 !important;
+  transform: none !important;
+}

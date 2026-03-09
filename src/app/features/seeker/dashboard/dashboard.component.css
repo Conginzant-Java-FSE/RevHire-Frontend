@@ -1,0 +1,55 @@
+.sd-page { max-width:100%; margin:0; padding:0.9rem 0.8rem 2rem; color:#0f172a; }
+.sd-hero { background:#fff; border:1px solid #dbe3ee; border-radius:16px; padding:1rem; display:flex; justify-content:space-between; gap:1rem; align-items:end; }
+.tag { display:inline-block; font-size:.75rem; font-weight:700; background:#ecfdf5; border:1px solid #a7f3d0; color:#065f46; border-radius:999px; padding:.2rem .55rem; }
+.sd-hero h1 { margin:.55rem 0 .3rem; font-size:clamp(1.55rem,3vw,2.2rem); font-weight:800; }
+.sd-hero p { margin:0; color:#475569; }
+.quick-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:.45rem; min-width:270px; }
+.quick-stats div { background:#f8fafc; border:1px solid #dbe3ee; border-radius:10px; padding:.55rem; text-align:center; }
+.quick-stats span { display:block; color:#64748b; font-size:.75rem; }
+.quick-stats strong { font-size:1.1rem; }
+.status-grid { margin-top:.9rem; display:grid; grid-template-columns:repeat(4,1fr); gap:.55rem; }
+.status-grid article { background:#fff; border:1px solid #dbe3ee; border-radius:12px; padding:.7rem; }
+.status-grid p { margin:0; color:#64748b; font-size:.78rem; }
+.status-grid strong { font-size:1.35rem; }
+.sd-main-grid { margin-top:.9rem; display:grid; grid-template-columns:1.2fr .8fr; gap:.8rem; }
+.cardx { background:#fff; border:1px solid #dbe3ee; border-radius:14px; padding:.9rem; margin-bottom:.8rem; }
+.head-row { display:flex; justify-content:space-between; gap:.5rem; align-items:center; }
+h3 { font-size:1rem; font-weight:800; margin:0 0 .55rem; }
+.muted { color:#64748b; font-size:.86rem; }
+.empty { border:1px dashed #cbd5e1; background:#f8fafc; border-radius:10px; padding:1rem; text-align:center; color:#64748b; }
+.app-list { display:flex; flex-direction:column; gap:.55rem; }
+.app-item { border:1px solid #e2e8f0; border-radius:10px; padding:.65rem; display:flex; justify-content:space-between; gap:.7rem; }
+.app-item h4 { margin:0; font-size:.95rem; font-weight:700; }
+.app-item p { margin:0; font-size:.78rem; color:#64748b; }
+.actions { display:flex; flex-wrap:wrap; gap:.35rem; align-items:center; justify-content:flex-end; }
+.reco-grid { display:grid; grid-template-columns:1fr 1fr; gap:.5rem; }
+.reco-card { text-decoration:none; color:inherit; border:1px solid #dbe3ee; border-radius:10px; padding:.6rem; background:#f8fafc; }
+.reco-card h4 { margin:.3rem 0 .2rem; font-size:.92rem; font-weight:700; }
+.reco-card p { margin:0; font-size:.8rem; color:#64748b; }
+.reco-card small { color:#475569; font-size:.73rem; }
+.score { display:inline-block; font-size:.7rem; font-weight:700; color:#0369a1; background:#e0f2fe; border-radius:999px; padding:.15rem .45rem; }
+.split { display:grid; grid-template-columns:1fr 1fr; gap:.7rem; }
+.inline-link { display:block; border:1px solid #e2e8f0; border-radius:8px; padding:.45rem .55rem; margin:.35rem 0; text-decoration:none; color:#0f172a; font-size:.84rem; }
+.inline-link span { display:block; font-size:.72rem; color:#64748b; }
+.notif-actions { display:flex; gap:.4rem; margin-bottom:.6rem; }
+.notif-group h5 { margin:.55rem 0 .4rem; font-size:.82rem; text-transform:uppercase; letter-spacing:.02em; color:#64748b; }
+.notif-item { border:1px solid #e2e8f0; border-radius:10px; padding:.5rem; margin-bottom:.45rem; }
+.notif-item.unread { border-color:#38bdf8; background:#f0f9ff; }
+.notif-item p { margin:0; font-size:.82rem; }
+.notif-item small { color:#64748b; font-size:.72rem; }
+.mini-actions { margin-top:.3rem; display:flex; gap:.3rem; }
+.opt { display:flex; gap:.5rem; align-items:center; margin:.35rem 0; font-size:.88rem; }
+.dark-ui,
+.dark-ui .sd-hero,
+.dark-ui .status-grid article,
+.dark-ui .cardx,
+.dark-ui .quick-stats div,
+.dark-ui .reco-card,
+.dark-ui .inline-link,
+.dark-ui .notif-item,
+.dark-ui .empty { background:#0f1c2d; color:#e2e8f0; border-color:#24415e; }
+.dark-ui .sd-hero p,.dark-ui .muted,.dark-ui .app-item p,.dark-ui .reco-card p,.dark-ui .inline-link span,.dark-ui .notif-item small,.dark-ui .notif-group h5,.dark-ui .status-grid p { color:#94a3b8; }
+.dark-ui .app-item { border-color:#24415e; }
+.dark-ui .notif-item.unread { background:#10273f; border-color:#3b82f6; }
+@media (max-width: 1024px){ .sd-main-grid{ grid-template-columns:1fr; } .quick-stats{ min-width:0; } }
+@media (max-width: 768px){ .sd-hero{ flex-direction:column; align-items:start; } .status-grid{ grid-template-columns:1fr 1fr; } .reco-grid,.split{ grid-template-columns:1fr; } }

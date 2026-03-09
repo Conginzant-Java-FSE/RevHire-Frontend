@@ -1,0 +1,114 @@
+<section class="sd-page" [class.dark-ui]="themeService.isDarkMode()">
+  <header class="sd-hero">
+    <div>
+      <p class="tag">Seeker Command Center</p>
+      <h1>Your Career Dashboard</h1>
+      <p>Track application progress, recommendations, and notifications in one place.</p>
+    </div>
+    <div class="quick-stats">
+      <div><span>Active</span><strong>{{ activeApplicationsCount }}</strong></div>
+      <div><span>Total</span><strong>{{ totalApplicationsCount }}</strong></div>
+      <div><span>Today</span><strong>{{ todayApplicationsCount }}</strong></div>
+    </div>
+  </header>
+
+  <section class="status-grid">
+    <article><p>Applied</p><strong>{{ appliedCount }}</strong></article>
+    <article><p>Under Review</p><strong>{{ viewedCount }}</strong></article>
+    <article><p>Shortlisted</p><strong>{{ shortlistedCount }}</strong></article>
+    <article><p>Rejected</p><strong>{{ rejectedCount }}</strong></article>
+  </section>
+
+  <section class="sd-main-grid">
+    <div class="left-col">
+      <div class="cardx">
+        <h3>My Applications</h3>
+        <p class="muted" *ngIf="engagementSummary">{{ engagementSummary }}</p>
+
+        <div *ngIf="isLoading" class="muted">Loading applications...</div>
+
+        <div *ngIf="!isLoading && applications.length === 0" class="empty">No applications yet.</div>
+
+        <div class="app-list" *ngIf="!isLoading && applications.length > 0">
+          <article *ngFor="let app of applications" class="app-item">
+            <div>
+              <h4>{{ app.jobTitle }}</h4>
+              <p>{{ app.companyName }} • {{ app.appliedAt | date:'mediumDate' }}</p>
+            </div>
+            <div class="actions">
+              <span class="badge text-bg-secondary">{{ app.status.replace('_',' ') }}</span>
+              <button class="btn btn-sm btn-outline-secondary" (click)="viewApplicationTimeline(app)">Timeline</button>
+              <button class="btn btn-sm btn-outline-danger" *ngIf="app.status !== appStatusEnum.WITHDRAWN && app.status !== appStatusEnum.REJECTED" (click)="withdrawApplication(app)">Withdraw</button>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="cardx">
+        <div class="head-row">
+          <h3>Recommended Jobs</h3>
+          <a routerLink="/jobs" class="btn btn-sm btn-outline-primary">Browse All</a>
+        </div>
+
+        <div *ngIf="isRecommendationLoading" class="muted">Calculating recommendations...</div>
+        <div *ngIf="!isRecommendationLoading && recommendedJobs.length === 0" class="empty">No recommendations yet.</div>
+
+        <div class="reco-grid" *ngIf="!isRecommendationLoading && recommendedJobs.length > 0">
+          <a class="reco-card" *ngFor="let rec of recommendedJobs" [routerLink]="['/jobs', rec.job.id]">
+            <span class="score">{{ rec.score }}% match</span>
+            <h4>{{ rec.job.title }}</h4>
+            <p>{{ rec.job.companyName }} • {{ rec.job.location }}</p>
+            <small>{{ rec.reasons.join(' | ') }}</small>
+          </a>
+        </div>
+      </div>
+
+      <div class="cardx split">
+        <div>
+          <h3>Recent Jobs</h3>
+          <a *ngFor="let job of recentJobs" class="inline-link" [routerLink]="['/jobs', job.id]">{{ job.title }} <span>{{ job.companyName }}</span></a>
+        </div>
+        <div>
+          <h3>Trending Jobs</h3>
+          <a *ngFor="let job of trendingJobs" class="inline-link" [routerLink]="['/jobs', job.id]">{{ job.title }} <span>{{ job.companyName }}</span></a>
+        </div>
+      </div>
+    </div>
+
+    <aside class="right-col">
+      <div class="cardx">
+        <div class="head-row">
+          <h3>Notifications</h3>
+          <span class="badge text-bg-danger" *ngIf="unreadCount > 0">{{ unreadCount }}</span>
+        </div>
+
+        <div class="notif-actions">
+          <button class="btn btn-sm btn-outline-secondary" (click)="markAllNotificationsRead()" [disabled]="unreadCount===0">Mark all read</button>
+          <button class="btn btn-sm btn-outline-danger" (click)="clearAllNotifications()" [disabled]="notifications.length===0">Clear all</button>
+        </div>
+
+        <div *ngIf="notifications.length===0" class="empty">No notifications</div>
+
+        <div class="notif-group" *ngFor="let group of groupedNotifications">
+          <h5>{{ group.label }}</h5>
+          <article *ngFor="let n of group.items" class="notif-item" [class.unread]="!n.isRead">
+            <p>{{ n.message }}</p>
+            <small>{{ n.createdAt | date:'short' }}</small>
+            <div class="mini-actions">
+              <button class="btn btn-sm btn-light" *ngIf="!n.isRead" (click)="markNotificationRead(n)">Read</button>
+              <button class="btn btn-sm btn-light" *ngIf="n.isRead" (click)="markNotificationUnread(n)">Unread</button>
+              <button class="btn btn-sm btn-light text-danger" (click)="deleteNotification(n)">Delete</button>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="cardx">
+        <h3>Alert Preferences</h3>
+        <label class="opt"><input type="checkbox" [(ngModel)]="emailAlerts" /> Email alerts</label>
+        <label class="opt"><input type="checkbox" [(ngModel)]="pushAlerts" /> Push alerts</label>
+        <button class="btn btn-primary btn-sm mt-2" (click)="saveAlertPreferences()">Save Preferences</button>
+      </div>
+    </aside>
+  </section>
+</section>

@@ -1,0 +1,22 @@
+.cp-page {
+  max-width: 980px;
+}
+
+.dark-ui .card {
+  background: #0f172a;
+  border: 1px solid #334155;
+  color: #e2e8f0;
+}
+
+.company-logo {
+  width: 68px;
+  height: 68px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+}
+
+.dark-ui .company-logo {
+  border-color: #334155;
+}

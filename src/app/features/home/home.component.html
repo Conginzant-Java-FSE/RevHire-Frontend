@@ -1,0 +1,143 @@
+<section class="rev-home">
+    <div class="home-grid">
+        <div #heroCard class="hero-copy reveal-up" data-reveal [style.transform]="heroTilt" (mousemove)="onHeroMove($event)" (mouseleave)="resetHeroTilt()">
+            <p class="eyebrow hero-animate hero-animate-1">India's modern hiring network</p>
+
+            <ng-container *ngIf="!authService.isAuthenticated()">
+                <h1 class="hero-animate hero-animate-2">
+                    Find your dream job.<br>
+                    <span>Hire top talent faster.</span>
+                </h1>
+                <p class="hero-text hero-animate hero-animate-3">
+                    RevHire brings seekers and recruiters together with smarter discovery, cleaner workflows, and
+                    verified opportunities.
+                </p>
+                <div class="hero-actions hero-animate hero-animate-4">
+                    <a routerLink="/jobs" class="btn btn-primary btn-lg">Search Jobs</a>
+                    <a routerLink="/auth/register" class="btn btn-light btn-lg">Create Free Account</a>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="authService.isJobSeeker()">
+                <h1 class="hero-animate hero-animate-2">
+                    Build your career momentum.<br>
+                    <span>Find roles that match your ambition.</span>
+                </h1>
+                <p class="hero-text hero-animate hero-animate-3">
+                    Get shortlisted faster with profile strength, saved jobs, and one-click apply.
+                </p>
+                <div class="hero-actions hero-animate hero-animate-4">
+                    <a routerLink="/jobs" class="btn btn-primary btn-lg hero-explore-btn">Explore Jobs</a>
+                    <a routerLink="/seeker/dashboard" class="btn btn-light btn-lg">Open Dashboard</a>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="authService.isEmployer()">
+                <h1 class="hero-animate hero-animate-2">
+                    Hiring sprint starts now.<br>
+                    <span>Discover, connect, and close top talent.</span>
+                </h1>
+                <p class="hero-text hero-animate hero-animate-3">
+                    Post jobs, track applicants, and hire with insight-driven decisions.
+                </p>
+                <div class="hero-actions hero-animate hero-animate-4">
+                    <a routerLink="/employer/post-job" class="btn btn-primary btn-lg post-job-btn">Post a Job</a>
+                    <a routerLink="/employer/dashboard" class="btn btn-light btn-lg">Employer Dashboard</a>
+                </div>
+            </ng-container>
+
+            <div class="trust-row hero-animate hero-animate-5">
+                <span>Verified employers</span>
+                <span>Secure OTP onboarding</span>
+                <span>ATS-friendly resumes</span>
+            </div>
+        </div>
+
+        <aside class="hero-panel reveal-up delay-1" data-reveal role="button" tabindex="0" aria-label="Open insights center"
+            (click)="openInsights()" (keydown.enter)="openInsights()" (keydown.space)="openInsights(); $event.preventDefault()">
+            <h3>Platform Snapshot</h3>
+            <div class="stat-grid">
+                <article class="stat-item">
+                    <p>Total Users</p>
+                    <strong>{{ platformStats?.totalUsers ?? '-' }}</strong>
+                </article>
+                <article class="stat-item">
+                    <p>Live Jobs</p>
+                    <strong>{{ platformStats?.totalJobs ?? '-' }}</strong>
+                </article>
+                <article class="stat-item">
+                    <p>Applications</p>
+                    <strong>{{ platformStats?.totalApplications ?? '-' }}</strong>
+                </article>
+                <article class="stat-item">
+                    <p>Resumes</p>
+                    <strong>{{ platformStats?.totalResumes ?? '-' }}</strong>
+                </article>
+            </div>
+
+            <div class="trend-box">
+                <h4>Hiring Trend Preview</h4>
+                <ul *ngIf="trendsPreview.length > 0; else noTrend">
+                    <li *ngFor="let trend of trendsPreview">{{ trend }}</li>
+                </ul>
+                <ng-template #noTrend>
+                    <p class="muted">Trend data will appear once activity grows.</p>
+                </ng-template>
+            </div>
+        </aside>
+    </div>
+
+    <div class="brand-strip reveal-up delay-1" data-reveal>
+        <a routerLink="/jobs" [queryParams]="{ keyword: 'software engineer' }">Software Roles</a>
+        <a routerLink="/jobs" [queryParams]="{ keyword: 'data analyst' }">Data & Analytics</a>
+        <a routerLink="/jobs" [queryParams]="{ keyword: 'full stack' }">Full Stack Jobs</a>
+        <a routerLink="/jobs" [queryParams]="{ keyword: 'remote' }">Remote Opportunities</a>
+        <a routerLink="/jobs" [queryParams]="{ keyword: 'fresher' }">Entry Level Jobs</a>
+    </div>
+
+    <section *ngIf="authService.isAuthenticated()" class="featured-section reveal-up delay-2" data-reveal>
+        <div class="featured-head">
+            <h3>Featured Jobs</h3>
+            <a routerLink="/jobs" class="btn btn-outline-primary btn-sm">View All Jobs</a>
+        </div>
+
+        <div class="featured-grid" *ngIf="featuredJobs.length > 0; else noFeatured">
+            <a class="featured-card" *ngFor="let job of featuredJobs" [routerLink]="['/jobs', job.id]">
+                <h4>{{ job.title }}</h4>
+                <p>{{ job.companyName }}</p>
+                <div class="meta">
+                    <span>{{ job.location }}</span>
+                    <span>{{ job.jobType }}</span>
+                </div>
+                <strong>INR {{ job.minSalary | number }} - {{ job.maxSalary | number }}</strong>
+            </a>
+        </div>
+        <ng-template #noFeatured>
+            <div class="empty-featured">Jobs will appear here as soon as employers publish openings.</div>
+        </ng-template>
+    </section>
+
+    <div class="feature-grid reveal-up delay-2" data-reveal>
+        <a data-reveal class="interactive-option" routerLink="/smart-matching">
+            <h4>Smart Matching</h4>
+            <p>Skill-based discovery improves relevance beyond plain keyword search.</p>
+            <span class="option-btn">Try Skill Match</span>
+        </a>
+        <a data-reveal class="interactive-option" routerLink="/workflow-hub">
+            <h4>Workflow Simplicity</h4>
+            <p>Clear pipeline for apply, review, shortlist, and hire decisions.</p>
+            <span class="option-btn">Open Workflow</span>
+        </a>
+        <a data-reveal class="interactive-option" routerLink="/insights-center">
+            <h4>Actionable Insights</h4>
+            <p>Live metrics for applications, jobs, and user engagement.</p>
+            <span class="option-btn">View Insights</span>
+        </a>
+    </div>
+
+    <div class="home-cta reveal-up delay-3" data-reveal>
+        <h3>Designed for seekers and recruiters who want speed and quality</h3>
+        <p>Make your hiring and job-search experience feel premium from day one.</p>
+        <a routerLink="/auth/register" class="btn btn-primary btn-lg home-final-cta-btn">Start With RevHire</a>
+    </div>
+</section>

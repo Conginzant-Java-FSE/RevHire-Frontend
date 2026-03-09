@@ -1,0 +1,78 @@
+<section class="auth-shell" [class.dark-ui]="themeService.isDarkMode()">
+  <div class="auth-grid">
+    <aside class="auth-panel">
+      <p class="auth-chip">Welcome Back</p>
+      <h1>Step back in and keep growing</h1>
+      <p>Track applications, discover opportunities, and move faster with RevHire.</p>
+      <ul>
+        <li>One-click apply and ATS support</li>
+        <li>Real-time application tracking</li>
+        <li>Secure OTP password reset</li>
+      </ul>
+
+      <div class="auth-visual">
+        <article class="visual-card">
+          <img
+            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80"
+            alt="Professionals working with laptops"
+            loading="lazy" />
+          <div class="visual-caption">Build your profile, apply smarter, and get hired faster.</div>
+        </article>
+        <article class="company-note">
+          <h3>Company Spotlight</h3>
+          <p>Employers from product companies, service firms, and fast-growing startups recruit through RevHire.</p>
+          <div class="company-stats">
+            <span><strong>500+</strong> active openings</span>
+            <span><strong>120+</strong> hiring teams</span>
+            <span><strong>24h</strong> average response</span>
+          </div>
+        </article>
+      </div>
+    </aside>
+
+    <div class="auth-card">
+      <h2>Log In</h2>
+      <p class="sub">Use your registered email and password</p>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+        <label>Email</label>
+        <input type="email" formControlName="email" class="form-control" placeholder="you@example.com" />
+        <small class="err" *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">Enter a valid email.</small>
+
+        <label class="mt-3">Password</label>
+        <div class="pwd-row">
+          <input [type]="showPassword ? 'text' : 'password'" formControlName="password" class="form-control" placeholder="Your password" />
+          <button type="button" class="btn btn-outline-secondary" (click)="togglePasswordVisibility()">{{ showPassword ? 'Hide' : 'Show' }}</button>
+        </div>
+        <small class="err" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">Password must be at least 6 characters.</small>
+
+        <button class="btn btn-primary w-100 mt-4" [disabled]="isLoading || loginForm.invalid" type="submit">
+          {{ isLoading ? 'Signing in...' : 'Sign In' }}
+        </button>
+      </form>
+
+      <div class="extra-actions">
+        <a href="#" (click)="openForgotPassword($event)">Forgot password?</a>
+        <span>New here? <a routerLink="/auth/register">Create account</a></span>
+      </div>
+
+      <section class="alt-login">
+        <button type="button" class="otp-link" (click)="loginWithOtp()">Use OTP to Login</button>
+        <div class="divider"><span>Or</span></div>
+        <button type="button" class="google-btn" (click)="loginWithGoogle()">
+          <span class="g-icon">G</span>
+          <span>Sign in with Google</span>
+        </button>
+
+        <div class="quick-start">
+          <h4>Smart Login Tips</h4>
+          <ul>
+            <li>Keep your profile updated for better matches</li>
+            <li>Turn on alerts for faster interview calls</li>
+            <li>Use saved jobs to track priority applications</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </div>
+</section>

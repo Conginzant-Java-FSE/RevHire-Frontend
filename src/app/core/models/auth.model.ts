@@ -24,17 +24,24 @@ export interface RegistrationRequest {
     phone?: string;
     location?: string;
 
-    
+    // Employer specific
     companyName?: string;
     industry?: string;
     companySize?: string;
     description?: string;
     website?: string;
 
-   
+    // JobSeeker specific
     currentStatus?: string;
     totalExperience?: number;
 
     securityQuestion?: string;
+    securityAnswer?: string;
+}
+
+export interface ResetPasswordRequest {
+    email: string;
+    otpCode: string;
+    newPassword: string;
     securityAnswer?: string;
 }

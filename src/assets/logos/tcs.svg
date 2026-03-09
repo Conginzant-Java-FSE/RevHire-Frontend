@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="72" viewBox="0 0 240 72">
+  <rect width="240" height="72" rx="10" fill="#ffffff"/>
+  <rect x="1" y="1" width="238" height="70" rx="9" fill="none" stroke="#e2e8f0"/>
+  <text x="120" y="45" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="800" fill="#e53e3e">TCS</text>
+</svg>

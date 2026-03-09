@@ -1,0 +1,74 @@
+<div class="jd-page" [class.dark-ui]="themeService.isDarkMode()">
+  <button (click)="goBack()" class="jd-back">Back to jobs</button>
+
+  <div *ngIf="isLoading" class="jd-loader card p-4 border-0 shadow-sm">
+    <div class="placeholder-glow"><span class="placeholder col-7"></span></div>
+    <div class="placeholder-glow mt-2"><span class="placeholder col-4"></span></div>
+    <div class="placeholder-glow mt-4"><span class="placeholder col-12" style="height:120px"></span></div>
+  </div>
+
+  <div *ngIf="!isLoading && job" class="jd-layout">
+    <section class="jd-main">
+      <div class="jd-head">
+        <div class="head-left">
+          <span class="type-pill">{{ job.jobType.replace('_', ' ') }}</span>
+          <h1>{{ job.title }}</h1>
+          <div class="company-row">
+            <img class="company-logo" [src]="getCompanyLogo()" (error)="onCompanyLogoError($event)" [alt]="job.companyName + ' logo'" loading="lazy" />
+            <div class="company-meta">
+              <a class="company-link" [routerLink]="['/companies', job.employerId]">{{ job.companyName }}</a>
+              <a *ngIf="getCompanyWebsite() as site" class="company-visit" [href]="site" target="_blank" rel="noopener noreferrer">Visit company website</a>
+            </div>
+          </div>
+          <div class="meta-line">
+            <span>{{ job.location }}</span>
+            <span>INR {{ job.minSalary | number }} - {{ job.maxSalary | number }}</span>
+            <span>{{ job.minExperienceYears }} - {{ job.maxExperienceYears }} years</span>
+          </div>
+        </div>
+      </div>
+
+      <article class="jd-block">
+        <h3>Job Description</h3>
+        <p>{{ job.description }}</p>
+      </article>
+
+      <article class="jd-block">
+        <h3>Required Skills</h3>
+        <div class="skills-wrap">
+          <span *ngFor="let skill of (job?.skills || [])">{{ skill }}</span>
+          <em *ngIf="!job?.skills || job.skills.length === 0">No specific skills listed</em>
+        </div>
+      </article>
+
+      <article class="jd-info-grid">
+        <div><p>Education Required</p><strong>{{ job.requiredEducationLevel || 'Not Specified' }}</strong></div>
+        <div><p>Views</p><strong>{{ job.viewsCount }}</strong></div>
+        <div><p>Deadline</p><strong>{{ job.deadline | date:'mediumDate' }}</strong></div>
+      </article>
+    </section>
+
+    <aside class="jd-side">
+      <div class="jd-sticky">
+        <h4>Application</h4>
+
+        <span *ngIf="authService.isEmployer()" class="badge text-bg-secondary mb-2">Viewing as Employer</span>
+        <a *ngIf="authService.isEmployer()" class="btn btn-primary w-100 mb-2" [routerLink]="['/employer/jobs', job.id, 'applicants']">Track Applicants</a>
+
+        <button *ngIf="!authService.isEmployer() && job.status !== 'OPEN'" class="btn btn-secondary w-100 mb-2" disabled>Job Closed</button>
+
+        <ng-container *ngIf="!authService.isEmployer() && job.status === 'OPEN' && hasApplied">
+          <span class="badge text-bg-success w-100 py-2 mb-2">Already Applied</span>
+          <button class="btn btn-outline-danger w-100 mb-2" (click)="withdrawApplication()" [disabled]="isWithdrawing">{{ isWithdrawing ? 'Withdrawing...' : 'Withdraw Application' }}</button>
+        </ng-container>
+
+        <ng-container *ngIf="!authService.isEmployer() && job.status === 'OPEN' && !hasApplied">
+          <button class="btn btn-success w-100 mb-2" (click)="oneClickApply()" [disabled]="isOneClickApplying || isApplying">{{ isOneClickApplying ? 'Preparing...' : 'One-Click Apply' }}</button>
+          <button class="btn btn-primary w-100 mb-2" (click)="applyNow()" [disabled]="isApplying || isOneClickApplying">{{ isApplying ? 'Applying...' : 'Apply Now' }}</button>
+        </ng-container>
+
+        <a *ngIf="!authService.isEmployer()" class="btn btn-outline-secondary w-100" [routerLink]="['/chat']" [queryParams]="{ partnerId: job.employerId, partnerName: job.companyName, partnerRole: roleEnum.EMPLOYER }">Message Employer</a>
+      </div>
+    </aside>
+  </div>
+</div>

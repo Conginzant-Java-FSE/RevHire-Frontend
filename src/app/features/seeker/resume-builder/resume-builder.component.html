@@ -1,0 +1,269 @@
+<div class="container-fluid py-4 py-md-5 transition-colors" [class.bg-dark]="themeService.isDarkMode()" [class.text-white]="themeService.isDarkMode()">
+  <div class="w-100 px-1 px-md-2">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4 no-print">
+      <div>
+        <h1 class="h2 fw-bold mb-1">Resume Builder</h1>
+        <p class="text-secondary mb-0">Build ATS-friendly resumes with templates, versions, and live scoring.</p>
+      </div>
+      <div class="d-flex flex-wrap gap-2">
+        <button class="btn btn-outline-primary" (click)="importFromParsedResume()">Import Parsed Data</button>
+        <button class="btn btn-outline-secondary" (click)="loadDraft()">Load Draft</button>
+        <button class="btn btn-primary" (click)="saveDraft()">Save Draft</button>
+        <button class="btn btn-outline-success" (click)="downloadAsText()">Download .txt</button>
+        <button class="btn btn-success" (click)="exportPdf()">Export PDF</button>
+        <button class="btn btn-outline-danger" (click)="clearDraft()">Clear</button>
+      </div>
+    </div>
+
+    <div class="row g-3 mb-4 no-print">
+      <div class="col-lg-4">
+        <div class="card border-0 shadow-sm rounded-4 h-100" [class.bg-dark]="themeService.isDarkMode()" [class.border]="themeService.isDarkMode()" [class.border-secondary]="themeService.isDarkMode()">
+          <div class="card-body p-3 p-md-4">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="small text-secondary">Resume Completeness</span>
+              <span class="fw-semibold">{{ completenessPercentage }}%</span>
+            </div>
+            <div class="progress progress-animated mb-3" role="progressbar" aria-label="Completion">
+              <div class="progress-bar" [style.width.%]="completenessPercentage"></div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="small text-secondary">ATS Resume Score</span>
+              <span class="fw-semibold text-success">{{ atsResumeScore }} / 100</span>
+            </div>
+            <div class="progress progress-animated" role="progressbar" aria-label="ATS Score">
+              <div class="progress-bar bg-success" [style.width.%]="atsResumeScore"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card border-0 shadow-sm rounded-4 h-100" [class.bg-dark]="themeService.isDarkMode()" [class.border]="themeService.isDarkMode()" [class.border-secondary]="themeService.isDarkMode()">
+          <div class="card-body p-3 p-md-4">
+            <h2 class="h6 fw-bold mb-3">Resume Version</h2>
+            <div class="btn-group w-100" role="group" aria-label="Resume Version">
+              <button *ngFor="let v of versionKeys" class="btn btn-sm" [ngClass]="v === activeVersion ? 'btn-primary' : 'btn-outline-primary'" (click)="switchVersion(v)">
+                {{ v === 'IT' ? 'IT' : (v === 'GOVT' ? 'Govt' : 'Startup') }}
+              </button>
+            </div>
+            <p class="small text-secondary mt-2 mb-0">Active: {{ versionLabel }} (auto-saved every few seconds)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card border-0 shadow-sm rounded-4 h-100" [class.bg-dark]="themeService.isDarkMode()" [class.border]="themeService.isDarkMode()" [class.border-secondary]="themeService.isDarkMode()">
+          <div class="card-body p-3 p-md-4">
+            <h2 class="h6 fw-bold mb-3">Template + Role</h2>
+            <div class="d-flex flex-wrap gap-2 mb-2">
+              <button
+                *ngFor="let t of templateKeys"
+                class="btn btn-sm"
+                [ngClass]="t === selectedTemplate
+                  ? (themeService.isDarkMode() ? 'btn-primary' : 'btn-dark')
+                  : (themeService.isDarkMode() ? 'btn-outline-light' : 'btn-outline-dark')"
+                (click)="onTemplateChange(t)">
+                {{ templateLabel(t) }}
+              </button>
+            </div>
+            <select class="form-select form-select-sm" [(ngModel)]="selectedRole" (ngModelChange)="onRoleChange($event)">
+              <option *ngFor="let role of roleOptions" [value]="role">{{ role }}</option>
+            </select>
+            <input
+              *ngIf="selectedRole === 'Others'"
+              class="form-control form-control-sm mt-2"
+              [(ngModel)]="customRole"
+              (ngModelChange)="saveDraft(false)"
+              placeholder="Enter custom role" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-6 no-print">
+        <div class="card border-0 shadow-sm rounded-4" [class.bg-dark]="themeService.isDarkMode()" [class.border]="themeService.isDarkMode()" [class.border-secondary]="themeService.isDarkMode()">
+          <div class="card-body p-4">
+            <section class="mb-4">
+              <button type="button" class="section-toggle" (click)="toggleSection('basic')">
+                <span class="h6 fw-bold mb-0">Basic Information</span>
+                <span>{{ collapsedSections.basic ? '+' : '-' }}</span>
+              </button>
+              <div class="collapsible" [class.collapsed]="collapsedSections.basic">
+                <div class="row g-3 mt-1">
+                  <div class="col-md-6"><input class="form-control" [(ngModel)]="fullName" placeholder="Full name"></div>
+                  <div class="col-md-6"><input class="form-control" [(ngModel)]="title" placeholder="Professional title"></div>
+                  <div class="col-md-6"><input class="form-control" [(ngModel)]="email" placeholder="Email"></div>
+                  <div class="col-md-6"><input class="form-control" [(ngModel)]="phone" placeholder="Phone"></div>
+                  <div class="col-12"><input class="form-control" [(ngModel)]="location" placeholder="Location"></div>
+                  <div class="col-12"><textarea class="form-control" rows="3" [(ngModel)]="summary" placeholder="Professional summary"></textarea></div>
+                </div>
+              </div>
+            </section>
+
+            <section class="mb-4">
+              <button type="button" class="section-toggle" (click)="toggleSection('skills')">
+                <span class="h6 fw-bold mb-0">Skills + Keyword Suggestions</span>
+                <span>{{ collapsedSections.skills ? '+' : '-' }}</span>
+              </button>
+              <div class="collapsible" [class.collapsed]="collapsedSections.skills">
+                <div class="d-flex gap-2 mt-2 mb-2">
+                  <input class="form-control" [(ngModel)]="skillInput" placeholder="Add a skill" (keyup.enter)="addSkill()">
+                  <button class="btn btn-outline-primary" (click)="addSkill()">Add</button>
+                </div>
+                <div class="d-flex flex-wrap gap-2 mb-3">
+                  <span *ngFor="let s of skills; let i = index" class="badge rounded-pill text-bg-light border skill-chip">
+                    {{ s }}
+                    <button class="btn btn-sm p-0 ms-2" (click)="removeSkill(i)">x</button>
+                  </span>
+                </div>
+                <p class="small text-secondary mb-2">Suggested keywords for {{ selectedRoleLabel }}:</p>
+                <div class="d-flex flex-wrap gap-2">
+                  <button *ngFor="let k of missingKeywords" class="btn btn-outline-success btn-sm fade-in-item" (click)="skillInput = k; addSkill()">+ {{ k }}</button>
+                </div>
+              </div>
+            </section>
+
+            <section class="mb-4">
+              <button type="button" class="section-toggle" (click)="toggleSection('experience')">
+                <span class="h6 fw-bold mb-0">Experience</span>
+                <span>{{ collapsedSections.experience ? '+' : '-' }}</span>
+              </button>
+              <div class="collapsible" [class.collapsed]="collapsedSections.experience">
+                <div class="border rounded-3 p-3 mb-3 fade-in-item" *ngFor="let exp of experience; let i = index">
+                  <div class="row g-2">
+                    <div class="col-md-6"><input class="form-control" [(ngModel)]="exp.role" placeholder="Role"></div>
+                    <div class="col-md-6"><input class="form-control" [(ngModel)]="exp.company" placeholder="Company"></div>
+                    <div class="col-md-6"><input type="month" class="form-control" [(ngModel)]="exp.startDate" placeholder="Start Date"></div>
+                    <div class="col-md-6"><input type="month" class="form-control" [(ngModel)]="exp.endDate" placeholder="End Date (or leave blank if current)"></div>
+                    <div class="col-12"><textarea class="form-control" rows="2" [(ngModel)]="exp.summary" placeholder="Work summary"></textarea></div>
+                  </div>
+                  <button class="btn btn-link text-danger px-0 mt-2" (click)="removeExperience(i)">Remove</button>
+                </div>
+                <button class="btn btn-outline-primary btn-sm" (click)="addExperience()">+ Add Experience</button>
+              </div>
+            </section>
+
+            <section class="mb-4">
+              <button type="button" class="section-toggle" (click)="toggleSection('education')">
+                <span class="h6 fw-bold mb-0">Education</span>
+                <span>{{ collapsedSections.education ? '+' : '-' }}</span>
+              </button>
+              <div class="collapsible" [class.collapsed]="collapsedSections.education">
+                <div class="border rounded-3 p-3 mb-3 fade-in-item" *ngFor="let edu of education; let i = index">
+                  <div class="row g-2">
+                    <div class="col-md-5"><input class="form-control" [(ngModel)]="edu.degree" placeholder="Degree"></div>
+                    <div class="col-md-5"><input class="form-control" [(ngModel)]="edu.institution" placeholder="Institution"></div>
+                    <div class="col-md-2"><input class="form-control" [(ngModel)]="edu.year" placeholder="Year"></div>
+                  </div>
+                  <button class="btn btn-link text-danger px-0 mt-2" (click)="removeEducation(i)">Remove</button>
+                </div>
+                <button class="btn btn-outline-primary btn-sm" (click)="addEducation()">+ Add Education</button>
+              </div>
+            </section>
+
+            <section class="mb-4">
+              <button type="button" class="section-toggle" (click)="toggleSection('projects')">
+                <span class="h6 fw-bold mb-0">Projects</span>
+                <span>{{ collapsedSections.projects ? '+' : '-' }}</span>
+              </button>
+              <div class="collapsible" [class.collapsed]="collapsedSections.projects">
+                <div class="border rounded-3 p-3 mb-3 fade-in-item" *ngFor="let p of projects; let i = index">
+                  <div class="row g-2">
+                    <div class="col-md-6"><input class="form-control" [(ngModel)]="p.title" placeholder="Project title"></div>
+                    <div class="col-md-6"><input class="form-control" [(ngModel)]="p.tech" placeholder="Tech stack"></div>
+                    <div class="col-12"><textarea class="form-control" rows="2" [(ngModel)]="p.summary" placeholder="Project summary"></textarea></div>
+                    <div class="col-12"><input class="form-control" [(ngModel)]="p.link" placeholder="Project link"></div>
+                  </div>
+                  <button class="btn btn-link text-danger px-0 mt-2" (click)="removeProject(i)">Remove</button>
+                </div>
+                <button class="btn btn-outline-primary btn-sm" (click)="addProject()">+ Add Project</button>
+              </div>
+            </section>
+
+            <section>
+              <button type="button" class="section-toggle" (click)="toggleSection('certifications')">
+                <span class="h6 fw-bold mb-0">Certifications</span>
+                <span>{{ collapsedSections.certifications ? '+' : '-' }}</span>
+              </button>
+              <div class="collapsible" [class.collapsed]="collapsedSections.certifications">
+                <div class="border rounded-3 p-3 mb-3 fade-in-item" *ngFor="let c of certifications; let i = index">
+                  <div class="row g-2">
+                    <div class="col-md-5"><input class="form-control" [(ngModel)]="c.name" placeholder="Certification"></div>
+                    <div class="col-md-5"><input class="form-control" [(ngModel)]="c.issuer" placeholder="Issuer"></div>
+                    <div class="col-md-2"><input class="form-control" [(ngModel)]="c.year" placeholder="Year"></div>
+                  </div>
+                  <button class="btn btn-link text-danger px-0 mt-2" (click)="removeCertification(i)">Remove</button>
+                </div>
+                <button class="btn btn-outline-primary btn-sm" (click)="addCertification()">+ Add Certification</button>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 print-col">
+        <div class="card border-0 shadow-sm rounded-4 resume-sheet template-transition"
+          [class.bg-dark]="themeService.isDarkMode()"
+          [class.border]="themeService.isDarkMode()"
+          [class.border-secondary]="themeService.isDarkMode()"
+          [class.template-modern]="selectedTemplate === 'MODERN'"
+          [class.template-professional]="selectedTemplate === 'PROFESSIONAL'"
+          [class.template-minimal]="selectedTemplate === 'MINIMAL'">
+          <div class="card-body p-4 p-md-5">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <h2 class="fw-bold mb-1">{{ fullName || 'Your Name' }}</h2>
+              <span class="badge text-bg-light border no-print">{{ versionLabel }}</span>
+            </div>
+            <p class="mb-2">{{ title || 'Professional Title' }}</p>
+            <p class="small text-secondary mb-4">{{ email }} <span *ngIf="phone">| {{ phone }}</span> <span *ngIf="location">| {{ location }}</span></p>
+
+            <div *ngIf="summary" class="mb-4">
+              <h3 class="h6 fw-bold border-bottom pb-1">Summary</h3>
+              <p class="mb-0" style="white-space: pre-line;">{{ summary }}</p>
+            </div>
+
+            <div *ngIf="skills.length" class="mb-4">
+              <h3 class="h6 fw-bold border-bottom pb-1">Skills</h3>
+              <p class="mb-0">{{ skills.join(', ') }}</p>
+            </div>
+
+            <div *ngIf="experience.length" class="mb-4">
+              <h3 class="h6 fw-bold border-bottom pb-1">Experience</h3>
+              <div *ngFor="let exp of experience" class="mb-3">
+                <div class="fw-semibold">{{ exp.role }} <span *ngIf="exp.company">- {{ exp.company }}</span></div>
+                <div class="small text-secondary">{{ exp.startDate }} <span *ngIf="exp.endDate">to {{ exp.endDate }}</span></div>
+                <div class="small" style="white-space: pre-line;">{{ exp.summary }}</div>
+              </div>
+            </div>
+
+            <div *ngIf="education.length" class="mb-4">
+              <h3 class="h6 fw-bold border-bottom pb-1">Education</h3>
+              <div *ngFor="let edu of education" class="mb-2">
+                <div>{{ edu.degree }} <span *ngIf="edu.institution">- {{ edu.institution }}</span></div>
+                <div class="small text-secondary">{{ edu.year }}</div>
+              </div>
+            </div>
+
+            <div *ngIf="projects.length" class="mb-4">
+              <h3 class="h6 fw-bold border-bottom pb-1">Projects</h3>
+              <div *ngFor="let p of projects" class="mb-2">
+                <div class="fw-semibold">{{ p.title }} <span *ngIf="p.tech" class="fw-normal">({{ p.tech }})</span></div>
+                <div class="small">{{ p.summary }}</div>
+                <div class="small" *ngIf="p.link">{{ p.link }}</div>
+              </div>
+            </div>
+
+            <div *ngIf="certifications.length">
+              <h3 class="h6 fw-bold border-bottom pb-1">Certifications</h3>
+              <div *ngFor="let c of certifications" class="mb-2 small">
+                {{ c.name }} <span *ngIf="c.issuer">- {{ c.issuer }}</span> <span *ngIf="c.year">({{ c.year }})</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

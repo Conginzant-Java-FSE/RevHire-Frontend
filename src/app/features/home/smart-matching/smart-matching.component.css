@@ -1,0 +1,160 @@
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.module-shell {
+  width: 100%;
+  min-height: calc(100vh - 140px);
+  border: 1px solid #cfe0f6;
+  border-radius: 24px;
+  padding: clamp(1rem, 2.3vw, 2rem);
+  background:
+    radial-gradient(circle at 10% 8%, rgba(59, 130, 246, 0.2), transparent 35%),
+    radial-gradient(circle at 90% 92%, rgba(14, 165, 233, 0.14), transparent 34%),
+    linear-gradient(160deg, #f6faff 0%, #edf4ff 48%, #e7f1ff 100%);
+  box-shadow: 0 20px 36px rgba(15, 23, 42, 0.08);
+}
+
+.module-head {
+  margin-bottom: 1rem;
+}
+
+.module-head h2 {
+  margin: 0.4rem 0 0.35rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.module-head p {
+  margin: 0;
+  color: #334155;
+  max-width: 80ch;
+}
+
+.chip {
+  display: inline-block;
+  background: #dceaff;
+  color: #1d4ed8;
+  border: 1px solid #bdd5fb;
+  border-radius: 999px;
+  padding: 0.26rem 0.76rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.quick-filters {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 0.62rem;
+}
+
+.quick-filters a {
+  text-decoration: none;
+  border: 1px solid #cadcf2;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 0.62rem 0.7rem;
+  text-align: center;
+  color: #334155;
+  font-weight: 700;
+  font-size: 0.82rem;
+}
+
+.preview {
+  margin-top: 1.05rem;
+}
+
+.preview-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.view-all {
+  text-decoration: none;
+  color: #1d4ed8;
+  font-weight: 800;
+}
+
+.cards {
+  margin-top: 0.78rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.7rem;
+}
+
+.job-card {
+  text-decoration: none;
+  border: 1px solid #cbdcf2;
+  border-radius: 14px;
+  background: #ffffff;
+  padding: 0.85rem;
+  color: #0f172a;
+}
+
+.job-card h4 {
+  margin: 0;
+  font-size: 0.96rem;
+  font-weight: 800;
+}
+
+.job-card p {
+  margin: 0.35rem 0;
+  color: #334155;
+  font-size: 0.84rem;
+}
+
+.job-card small {
+  color: #64748b;
+}
+
+.empty {
+  margin-top: 0.7rem;
+  border: 1px dashed #aec7e7;
+  border-radius: 12px;
+  background: #ffffff;
+  padding: 0.9rem;
+  color: #475569;
+}
+
+:host-context(body.dark-mode) .module-shell {
+  border-color: #24415f;
+  background:
+    radial-gradient(circle at 12% 10%, rgba(59, 130, 246, 0.2), transparent 35%),
+    radial-gradient(circle at 88% 88%, rgba(45, 212, 191, 0.14), transparent 35%),
+    linear-gradient(160deg, #0a1626 0%, #0c1d31 50%, #10243a 100%);
+  box-shadow: 0 22px 40px rgba(2, 6, 23, 0.45);
+}
+
+:host-context(body.dark-mode) .module-head p {
+  color: #b3c3d7;
+}
+
+:host-context(body.dark-mode) .chip {
+  background: rgba(59, 130, 246, 0.2);
+  color: #bfdbfe;
+  border-color: rgba(147, 197, 253, 0.35);
+}
+
+:host-context(body.dark-mode) .quick-filters a,
+:host-context(body.dark-mode) .job-card,
+:host-context(body.dark-mode) .empty {
+  background: #11263e;
+  border-color: #2a4868;
+  color: #dbeafe;
+}
+
+:host-context(body.dark-mode) .job-card p,
+:host-context(body.dark-mode) .job-card small,
+:host-context(body.dark-mode) .empty {
+  color: #9fb0c5;
+}
+
+:host-context(body.dark-mode) .view-all {
+  color: #93c5fd;
+}
+

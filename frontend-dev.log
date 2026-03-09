@@ -1,0 +1,77 @@
+
+> rev-hire-frontend@0.0.0 start
+> ng serve
+
+Initial chunk files | Names                      |  Raw size
+styles.css          | styles                     | 275.90 kB | 
+scripts.js          | scripts                    | 106.68 kB | 
+polyfills.js        | polyfills                  |  88.09 kB | 
+main.js             | main                       |   5.80 kB | 
+chunk-GXDVMBQZ.js   | -                          |   3.13 kB | 
+chunk-M34D2KUN.js   | -                          |   2.43 kB | 
+
+                    | Initial total              | 482.02 kB
+
+Lazy chunk files    | Names                      |  Raw size
+chunk-SNQABVUE.js   | resume-builder-component   |  71.74 kB | 
+chunk-DLEDV72C.js   | job-list-component         |  58.82 kB | 
+chunk-HKIYP7I6.js   | main-layout-component      |  53.16 kB | 
+chunk-6UGHMG5E.js   | profile-component          |  47.79 kB | 
+chunk-I66HVVUE.js   | dashboard-component        |  44.00 kB | 
+chunk-4XCVUA33.js   | job-detail-component       |  41.97 kB | 
+chunk-3THXHYU2.js   | job-applicants-component   |  40.66 kB | 
+chunk-BBUDRA4I.js   | home-component             |  38.99 kB | 
+chunk-XB5XBVFA.js   | dashboard-component        |  30.57 kB | 
+chunk-MMSZVKH3.js   | employer-profile-component |  25.67 kB | 
+chunk-HSB5RKEJ.js   | post-job-component         |  21.18 kB | 
+chunk-P774B74X.js   | register-component         |  20.42 kB | 
+chunk-HVJ5PCXM.js   | chat-component             |  18.89 kB | 
+chunk-Y42REENH.js   | login-component            |  14.67 kB | 
+chunk-O55DNK6G.js   | saved-jobs-component       |  12.96 kB | 
+...and 7 more lazy chunks files. Use "--verbose" to show all the files.
+
+Application bundle generation complete. [8.879 seconds]
+
+Watch mode enabled. Watching for file changes...
+  ➜  Local:   http://localhost:4200/
+  ➜  press h + enter to show help
+Initial chunk files | Names                    | Raw size
+main.js             | main                     |  5.80 kB | 
+chunk-WQSXGSOG.js   | -                        |  3.26 kB | 
+
+Lazy chunk files    | Names                    | Raw size
+chunk-QAS3K34W.js   | resume-builder-component | 71.74 kB | 
+chunk-KPXUWPAU.js   | job-list-component       | 58.82 kB | 
+chunk-C3ZE4PZF.js   | main-layout-component    | 53.16 kB | 
+chunk-HZXNBHWS.js   | profile-component        | 47.79 kB | 
+chunk-E74FVMJQ.js   | dashboard-component      | 44.00 kB | 
+chunk-EC5DFLGY.js   | job-detail-component     | 41.97 kB | 
+chunk-4MNRQVI2.js   | home-component           | 38.99 kB | 
+chunk-GYZK265C.js   | dashboard-component      | 30.57 kB | 
+chunk-URE6YFYB.js   | post-job-component       | 21.18 kB | 
+chunk-SWLMWKMY.js   | register-component       | 20.42 kB | 
+chunk-QCJBIPVD.js   | chat-component           | 18.89 kB | 
+chunk-6RAQPDXE.js   | login-component          | 14.67 kB | 
+chunk-7NK6IWZE.js   | saved-jobs-component     | 12.96 kB | 
+
+Application bundle generation complete. [13.927 seconds]
+
+Page reload sent to client(s).
+Initial chunk files | Names           | Raw size
+main.js             | main            |  5.80 kB | 
+
+Lazy chunk files    | Names           | Raw size
+chunk-WYOXBCWN.js   | login-component | 14.89 kB | 
+
+Application bundle generation complete. [0.749 seconds]
+
+Page reload sent to client(s).
+Initial chunk files | Names                 | Raw size
+main.js             | main                  |  5.80 kB | 
+
+Lazy chunk files    | Names                 | Raw size
+chunk-DY346GX5.js   | main-layout-component | 53.39 kB | 
+
+Application bundle generation complete. [1.750 seconds]
+
+Page reload sent to client(s).

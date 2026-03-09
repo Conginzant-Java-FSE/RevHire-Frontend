@@ -1,0 +1,33 @@
+<section class="module-shell">
+  <header class="module-head">
+    <p class="chip">Smart Matching</p>
+    <h2>Find role-fit openings faster</h2>
+    <p>Use practical matching filters recruiters use in real hiring pipelines.</p>
+  </header>
+
+  <div class="quick-filters">
+    <a routerLink="/jobs" [queryParams]="{ keyword: 'java developer', location: 'hyderabad' }">Java + Hyderabad</a>
+    <a routerLink="/jobs" [queryParams]="{ skills: 'angular', keyword: 'frontend' }">Angular Frontend</a>
+    <a routerLink="/jobs" [queryParams]="{ keyword: 'remote' }">Remote Roles</a>
+    <a routerLink="/jobs" [queryParams]="{ company: 'Infosys' }">Infosys Openings</a>
+    <a routerLink="/jobs" [queryParams]="{ company: 'TCS' }">TCS Openings</a>
+  </div>
+
+  <section class="preview">
+    <div class="preview-head">
+      <h3>Recent opportunities</h3>
+      <a routerLink="/jobs" class="view-all">Open full jobs board</a>
+    </div>
+
+    <div class="cards" *ngIf="!loading && topJobs.length > 0; else emptyState">
+      <a class="job-card" *ngFor="let job of topJobs" [routerLink]="['/jobs', job.id]">
+        <h4>{{ job.title }}</h4>
+        <p>{{ job.companyName }} • {{ job.location }}</p>
+        <small>{{ job.jobType }}</small>
+      </a>
+    </div>
+    <ng-template #emptyState>
+      <div class="empty">No jobs available yet. Open jobs board to search all listings.</div>
+    </ng-template>
+  </section>
+</section>

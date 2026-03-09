@@ -1,0 +1,142 @@
+.rv-nav {
+  --nav-bg: #ffffffcc;
+  --nav-border: #d7e2ef;
+  background: linear-gradient(120deg, #ffffffee, #f2f7fd);
+  border-bottom: 1px solid var(--nav-border);
+  backdrop-filter: blur(8px);
+}
+
+.rv-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: #0f172a;
+  text-decoration: none;
+}
+
+.brand-mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  color: #0f172a;
+  background: linear-gradient(135deg, #2dd4bf, #22c55e);
+}
+
+.brand-text {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-size: 1.15rem;
+}
+
+.rv-links .nav-link {
+  color: #334155;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 0.45rem 0.75rem;
+}
+
+.rv-links .nav-link:hover,
+.rv-links .nav-link.active {
+  color: #0f172a;
+  background: rgba(148, 163, 184, 0.22);
+}
+
+.rv-theme-btn {
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  color: #334155;
+}
+
+.rv-theme-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.rv-chat {
+  border: 1px solid rgba(100, 116, 139, 0.35);
+  color: #334155;
+}
+
+.rv-chat:hover {
+  background: rgba(148, 163, 184, 0.16);
+  color: #0f172a;
+}
+
+.rv-avatar-btn {
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  color: #0f172a;
+  background: rgba(2, 132, 199, 0.08);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0.25rem 0.6rem 0.25rem 0.3rem;
+}
+
+.rv-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #14b8a6, #3b82f6);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.rv-menu {
+  min-width: 230px;
+  border: 1px solid #dbe3ee;
+  border-radius: 12px;
+  box-shadow: 0 16px 35px rgba(15, 23, 42, 0.12);
+}
+
+.rv-menu .dropdown-item {
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+
+@media (max-width: 991px) {
+  .rv-actions {
+    padding-top: 0.8rem;
+  }
+}
+
+:host-context(body.dark-mode) .rv-nav {
+  background: linear-gradient(120deg, #08121f, #0e243b);
+  border-bottom-color: #1a3551;
+}
+
+:host-context(body.dark-mode) .rv-brand,
+:host-context(body.dark-mode) .rv-links .nav-link,
+:host-context(body.dark-mode) .rv-theme-btn,
+:host-context(body.dark-mode) .rv-chat,
+:host-context(body.dark-mode) .rv-avatar-btn {
+  color: #e2e8f0;
+}
+
+:host-context(body.dark-mode) .rv-links .nav-link:hover,
+:host-context(body.dark-mode) .rv-links .nav-link.active {
+  color: #ffffff;
+  background: rgba(148, 163, 184, 0.16);
+}
+
+:host-context(body.dark-mode) .rv-menu {
+  background: #102238;
+  border-color: #23405f;
+}
+
+:host-context(body.dark-mode) .rv-menu .dropdown-item {
+  color: #e2e8f0;
+}
+
+:host-context(body.dark-mode) .rv-menu .dropdown-item:hover {
+  background: rgba(148, 163, 184, 0.15);
+}

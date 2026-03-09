@@ -1,0 +1,22 @@
+.conversation-list {
+  max-height: 70vh;
+  overflow: auto;
+}
+
+.chat-body {
+  max-height: 58vh;
+  overflow-y: auto;
+}
+
+.chat-bubble {
+  background: rgba(148, 163, 184, 0.15);
+  max-width: 75%;
+}
+
+.chat-mine {
+  background: rgba(59, 130, 246, 0.2);
+}
+
+.tiny {
+  font-size: 0.7rem;
+}

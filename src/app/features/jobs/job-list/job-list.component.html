@@ -1,0 +1,146 @@
+<div class="jl-page" [class.dark-ui]="themeService.isDarkMode()">
+  <section class="jl-hero">
+    <div class="jl-title-wrap">
+      <h1>Find The Right Opportunity</h1>
+      <p>Search by role, skill, location, company, and smart filters used by modern hiring platforms.</p>
+    </div>
+    <div class="jl-action-wrap">
+      <button class="btn btn-outline-secondary" (click)="showFilters = !showFilters">{{ showFilters ? 'Hide' : 'Show' }} Advanced</button>
+      <button class="btn btn-primary" (click)="onSearch()">Search Jobs</button>
+    </div>
+  </section>
+
+  <section class="jl-search-card">
+    <div class="row g-3">
+      <div class="col-lg-3 col-md-6"><input type="text" [(ngModel)]="keyword" (ngModelChange)="triggerInstantSearch()" class="form-control" placeholder="Job title" /></div>
+      <div class="col-lg-3 col-md-6"><input type="text" [(ngModel)]="skillsKeyword" (ngModelChange)="triggerInstantSearch()" class="form-control" placeholder="Skills" list="job-skill-options" /></div>
+      <div class="col-lg-3 col-md-6"><input type="text" [(ngModel)]="companyKeyword" (ngModelChange)="triggerInstantSearch()" class="form-control" placeholder="Company" /></div>
+      <div class="col-lg-3 col-md-6"><input type="text" [(ngModel)]="location" (ngModelChange)="triggerInstantSearch()" class="form-control" placeholder="Location" list="job-location-options" /></div>
+    </div>
+
+    <div class="row g-3 mt-1" *ngIf="showFilters">
+      <div class="col-lg-2 col-md-4">
+        <select [(ngModel)]="selectedType" (ngModelChange)="triggerInstantSearch()" class="form-select">
+          <option value="">Job Type</option>
+          <option *ngFor="let type of jobTypes" [value]="type">{{type.replace('_', ' ')}}</option>
+        </select>
+      </div>
+      <div class="col-lg-2 col-md-4">
+        <select [(ngModel)]="workMode" (ngModelChange)="triggerInstantSearch()" class="form-select">
+          <option value="">Work Mode</option>
+          <option value="REMOTE">Remote</option>
+          <option value="HYBRID">Hybrid</option>
+          <option value="ONSITE">On-site</option>
+        </select>
+      </div>
+      <div class="col-lg-2 col-md-4">
+        <select [(ngModel)]="experienceLevel" (ngModelChange)="triggerInstantSearch()" class="form-select">
+          <option value="">Experience</option>
+          <option value="FRESHER">Fresher</option>
+          <option value="MID">Mid</option>
+          <option value="SENIOR">Senior</option>
+        </select>
+      </div>
+      <div class="col-lg-2 col-md-6"><input type="number" [(ngModel)]="minSalary" (ngModelChange)="triggerInstantSearch()" class="form-control" min="0" placeholder="Min Salary" /></div>
+      <div class="col-lg-2 col-md-6"><input type="number" [(ngModel)]="maxSalary" (ngModelChange)="triggerInstantSearch()" class="form-control" min="0" placeholder="Max Salary" /></div>
+      <div class="col-lg-2 col-md-6">
+        <select [(ngModel)]="sortBy" (ngModelChange)="triggerInstantSearch()" class="form-select">
+          <option value="LATEST">Sort: Latest</option>
+          <option value="SALARY_DESC">Salary High-Low</option>
+          <option value="MOST_APPLIED">Most Applied</option>
+        </select>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <select [(ngModel)]="datePosted" (ngModelChange)="triggerInstantSearch()" class="form-select">
+          <option value="">Date Posted</option>
+          <option value="24H">Last 24 Hours</option>
+          <option value="7D">Last 7 Days</option>
+          <option value="30D">Last 30 Days</option>
+        </select>
+      </div>
+      <div class="col-lg-3 col-md-6"><input type="text" [(ngModel)]="industryType" (ngModelChange)="triggerInstantSearch()" class="form-control" placeholder="Industry keyword" /></div>
+      <div class="col-lg-6 d-flex gap-2">
+        <button class="btn btn-primary" (click)="onSearch()">Apply Filters</button>
+        <button class="btn btn-outline-secondary" (click)="clearFilters()">Clear All</button>
+        <button class="btn btn-outline-success" (click)="saveCurrentPreset()">Save Preset</button>
+      </div>
+    </div>
+
+    <datalist id="job-skill-options"><option *ngFor="let skill of availableSkills" [value]="skill"></option></datalist>
+    <datalist id="job-location-options"><option *ngFor="let loc of availableLocations" [value]="loc"></option></datalist>
+  </section>
+
+  <section class="jl-toolbar">
+    <div class="fw-semibold">{{ isLoading ? 'Searching...' : (jobs.length + ' Jobs Found') }}</div>
+
+    <div class="chip-group" *ngIf="searchHistory.length">
+      <span class="chip-label">Recent</span>
+      <button *ngFor="let term of searchHistory.slice(0,3)" class="chip" (click)="keyword = term; triggerInstantSearch()">{{ term }}</button>
+    </div>
+
+    <div class="chip-group" *ngIf="savedPresets.length">
+      <span class="chip-label">Presets</span>
+      <span class="chip preset" *ngFor="let preset of savedPresets">
+        <button class="chip-link" (click)="applyPreset(preset)">{{ preset.name }}</button>
+        <button class="chip-close" (click)="removePreset(preset.name)">x</button>
+      </span>
+    </div>
+  </section>
+
+  <section *ngIf="!isLoading && recentlyViewedJobs.length > 0" class="jl-recent">
+    <h3>Recently Viewed</h3>
+    <div class="recent-list">
+      <a class="recent-item" *ngFor="let rj of recentlyViewedJobs" [routerLink]="['/jobs', rj.id]">{{ rj.title }}<span>{{ rj.companyName }}</span></a>
+    </div>
+  </section>
+
+  <section *ngIf="!isLoading && jobs.length > 0" class="jl-grid">
+    <article *ngFor="let job of jobs" class="jl-card">
+      <div class="card-top">
+        <span class="type-pill">{{ job.jobType.replace('_', ' ') }}</span>
+        <button *ngIf="authService.isJobSeeker()" class="save-btn" (click)="toggleSaveJob(job.id); $event.preventDefault(); $event.stopPropagation();" [disabled]="isSavingJobId === job.id">
+          {{ isSaved(job.id) ? 'Saved' : 'Save' }}
+        </button>
+      </div>
+
+      <h4>{{ job.title }}</h4>
+      <div class="company-row">
+        <img class="company-logo" [src]="getCompanyLogo(job)" (error)="onCompanyLogoError($event, job.companyName)" [alt]="job.companyName + ' logo'" loading="lazy" />
+        <a class="company-link" [routerLink]="['/companies', job.employerId]">{{ job.companyName }}</a>
+      </div>
+
+      <div class="meta-row">
+        <span>{{ job.location }}</span>
+        <span>{{ job.minExperienceYears }}+ yrs</span>
+      </div>
+
+      <p class="desc">{{ job.description }}</p>
+
+      <div class="skills" *ngIf="job.skills && job.skills.length">
+        <span *ngFor="let skill of job.skills.slice(0,4)">{{ skill }}</span>
+      </div>
+
+      <div class="fit" *ngIf="authService.isJobSeeker() && getSkillMatchPercent(job) > 0">
+        Skill Match: {{ getSkillMatchPercent(job) }}%
+      </div>
+
+      <div class="salary">INR {{ job.minSalary | number }} - {{ job.maxSalary | number }}</div>
+
+      <div class="card-actions">
+        <button class="btn btn-outline-secondary btn-sm" (click)="toggleJobDetails(job.id)">{{ expandedJobId === job.id ? 'Hide' : 'Quick View' }}</button>
+        <a class="btn btn-primary btn-sm" [routerLink]="['/jobs', job.id]" (click)="markRecentlyViewed(job.id)">View Details</a>
+      </div>
+
+      <div class="expanded" *ngIf="expandedJobId === job.id">
+        <p><strong>Deadline:</strong> {{ job.deadline | date:'mediumDate' }}</p>
+        <p><strong>Status:</strong> {{ job.status }}</p>
+      </div>
+    </article>
+  </section>
+
+  <section *ngIf="!isLoading && jobs.length === 0" class="jl-empty">
+    <h3>No jobs matched your filters</h3>
+    <p>Try broadening skills/location or clear advanced filters.</p>
+    <button class="btn btn-primary" (click)="clearFilters()">Clear Filters</button>
+  </section>
+</div>

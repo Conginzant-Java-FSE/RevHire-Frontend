@@ -1,0 +1,96 @@
+﻿<section class="ed-page" [class.dark-ui]="themeService.isDarkMode()">
+  <header class="ed-hero">
+    <div>
+      <p class="tag">Employer Workspace</p>
+      <h1>Hiring Dashboard</h1>
+      <p>Manage jobs, monitor pipeline, and discover candidates quickly.</p>
+    </div>
+    <a routerLink="/employer/post-job" class="btn btn-primary post-job-btn">Post New Job</a>
+  </header>
+
+  <section class="ed-stats" *ngIf="employerStats">
+    <article><p>Active Jobs</p><strong>{{ employerStats.activeJobs }}</strong></article>
+    <article><p>Total Applications</p><strong>{{ employerStats.totalApplications }}</strong></article>
+    <article><p>New Applications</p><strong>{{ employerStats.newApplications }}</strong></article>
+    <article><p>Filled Positions</p><strong>{{ employerStats.filledPositions }}</strong></article>
+  </section>
+
+  <section class="ed-layout">
+    <div>
+      <div class="cardx">
+        <div class="head-row">
+          <h3>Your Jobs</h3>
+          <span class="muted" *ngIf="jobAnalytics">Open: {{ jobAnalytics.openJobs }} | Total: {{ jobAnalytics.totalJobs }}</span>
+        </div>
+
+        <div *ngIf="isLoading" class="muted">Loading jobs...</div>
+        <div *ngIf="!isLoading && jobs.length===0" class="empty">No jobs posted yet.</div>
+
+        <div class="job-list" *ngIf="!isLoading && jobs.length>0">
+          <article class="job-item" *ngFor="let job of jobs">
+            <div>
+              <h4>{{ job.title }}</h4>
+              <p>{{ job.location }} • {{ job.jobType.replace('_',' ') }} • {{ job.applicationCount || 0 }} applications</p>
+            </div>
+            <div class="actions">
+              <select class="form-select form-select-sm" [ngModel]="job.status" (ngModelChange)="updateStatus(job, $event)">
+                <option [ngValue]="jobStatusEnum.OPEN">OPEN</option>
+                <option [ngValue]="jobStatusEnum.CLOSED">CLOSED</option>
+                <option [ngValue]="jobStatusEnum.FILLED">FILLED</option>
+              </select>
+              <a class="btn btn-sm btn-outline-primary" [routerLink]="['/employer/jobs', job.id, 'applicants']">Applicants</a>
+              <button class="btn btn-sm btn-outline-secondary" (click)="duplicateJob(job)">Duplicate</button>
+              <button class="btn btn-sm btn-outline-danger" (click)="deleteJob(job)">Delete</button>
+              <a class="btn btn-sm btn-primary" [routerLink]="['/jobs', job.id]">View</a>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="cardx seeker-search">
+        <h3>Search Candidates</h3>
+        <div class="row g-2">
+          <div class="col-md-5"><input class="form-control" [(ngModel)]="seekerSearchSkills" placeholder="Skill / keyword" /></div>
+          <div class="col-md-2"><input class="form-control" [(ngModel)]="seekerSearchMinExp" type="number" min="0" placeholder="Min" /></div>
+          <div class="col-md-2"><input class="form-control" [(ngModel)]="seekerSearchMaxExp" type="number" min="0" placeholder="Max" /></div>
+          <div class="col-md-3 d-flex gap-2">
+            <button class="btn btn-primary w-100" (click)="searchSeekers()">Search</button>
+            <button class="btn btn-outline-secondary" (click)="clearSearch()">Clear</button>
+          </div>
+        </div>
+
+        <div *ngIf="isLoadingSeekers" class="muted mt-2">Loading candidates...</div>
+        <div *ngIf="hasSearched && filteredSeekers.length===0" class="empty mt-2">No matching candidates.</div>
+
+        <div class="seeker-grid" *ngIf="filteredSeekers.length>0">
+          <article *ngFor="let seeker of filteredSeekers">
+            <h4>{{ seeker.name }}</h4>
+            <p>{{ seeker.email }}</p>
+            <small>{{ seeker.location || 'Location N/A' }} • {{ seeker.totalExperience || 0 }} yrs • {{ seeker.currentStatus || 'Status N/A' }}</small>
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <aside>
+      <div class="cardx" *ngIf="jobAnalytics">
+        <h3>Job Analytics</h3>
+        <p class="muted">Jobs by type</p>
+        <div class="kv" *ngFor="let entry of (jobAnalytics.jobsByType | keyvalue)">
+          <span>{{ entry.key }}</span><strong>{{ entry.value }}</strong>
+        </div>
+        <p class="muted mt-2">Top locations</p>
+        <div class="kv" *ngFor="let loc of topLocationEntries">
+          <span>{{ loc[0] }}</span><strong>{{ loc[1] }}</strong>
+        </div>
+      </div>
+
+      <div class="cardx" *ngIf="activitySummary">
+        <h3>Activity Snapshot</h3>
+        <p class="muted">{{ activitySummary }}</p>
+      </div>
+    </aside>
+  </section>
+</section>
+
+

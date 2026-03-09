@@ -1,0 +1,188 @@
+﻿node.exe : - Generating browser application bundles (phase: setup)...
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" 
+"C:\Users\jahna\AppData\Roaming\ ...
++ 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (- Generating br...hase: 
+    setup)...:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+Γ£ö Browser application bundle generation complete.
+05 03 2026 18:22:35.450:INFO [karma-server]: Karma v6.4.4 server started at http://localhost:9876/
+05 03 2026 18:22:35.452:INFO [launcher]: Launching browsers ChromeHeadless with concurrency unlimited
+05 03 2026 18:22:35.459:INFO [launcher]: Starting browser ChromeHeadless
+05 03 2026 18:22:36.732:INFO [Chrome Headless 145.0.0.0 (Windows 10)]: Connected on socket N2rtACNJh18CTSRnAAAB with id 95855407
+....
+ERROR: [36mError: NG04002: Cannot match any routes. URL Segment: 'auth/login'
+Error: NG04002: Cannot match any routes. URL Segment: 'auth/login'
+    at Recognizer.noMatchError (http://localhost:9876/_karma_webpack_/webpack:/node_modules/@angular/router/fesm2022/router.mjs:3780:16)
+    at selector (http://localhost:9876/_karma_webpack_/webpack:/node_modules/@angular/router/fesm2022/router.mjs:3810:28)
+    at onError (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/operators/catchError.js:10:39)
+    at OperatorSubscriber._error (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/operators/OperatorSubscriber.js:23:21)
+    at OperatorSubscriber.error (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Subscriber.js:40:18)
+    at OperatorSubscriber._error (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Subscriber.js:64:30)
+    at OperatorSubscriber.error (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Subscriber.js:40:18)
+    at OperatorSubscriber._error (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Subscriber.js:64:30)
+    at OperatorSubscriber.error (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Subscriber.js:40:18)
+    at OperatorSubscriber._error (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Subscriber.js:64:30)[39m
+..
+ERROR: [36mError: NG04002: Cannot match any routes. URL Segment: 'employer/dashboard'
+Error: NG04002: Cannot match any routes. URL Segment: 'employer/dashboard'
+    at Recognizer.noMatchError (http://localhost:9876/_karma_webpack_/webpack:/node_modules/@angular/router/fesm2022/router.mjs:3780:16)
+    at selector (http://localhost:9876/_karma_webpack_/webpack:/node_modules/@angular/router/fesm2022/router.mjs:3810:28)
+    at onError (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/operators/catchError.js:10:39)
+    at OperatorSubscriber._error (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/operators/OperatorSubscriber.js:23:21)
+    at OperatorSubscriber.error (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Subscriber.js:40:18)
+    at OperatorSubscriber._error (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Subscriber.js:64:30)
+    at OperatorSubscriber.error (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Subscriber.js:40:18)
+    at OperatorSubscriber._error (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Subscriber.js:64:30)
+    at OperatorSubscriber.error (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Subscriber.js:40:18)
+    at OperatorSubscriber._error (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Subscriber.js:64:30)[39m
+............
+ERROR: [36mError: NG04002: Cannot match any routes. URL Segment: 'auth/login'
+Error: NG04002: Cannot match any routes. URL Segment: 'auth/login'
+    at Recognizer.noMatchError (http://localhost:9876/_karma_webpack_/webpack:/node_modules/@angular/router/fesm2022/router.mjs:3780:16)
+    at selector (http://localhost:9876/_karma_webpack_/webpack:/node_modules/@angular/router/fesm2022/router.mjs:3810:28)
+    at onError (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/operators/catchError.js:10:39)
+    at OperatorSubscriber._error (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/operators/OperatorSubscriber.js:23:21)
+    at OperatorSubscriber.error (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Subscriber.js:40:18)
+    at OperatorSubscriber._error (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Subscriber.js:64:30)
+    at OperatorSubscriber.error (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Subscriber.js:40:18)
+    at OperatorSubscriber._error (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Subscriber.js:64:30)
+    at OperatorSubscriber.error (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Subscriber.js:40:18)
+    at OperatorSubscriber._error (http://localhost:9876/_karma_webpack_/webpack:/node_modules/rxjs/dist/esm/internal/Subscriber.js:64:30)[39m
+..........
+[31mChrome Headless 145.0.0.0 (Windows 10) LoginComponent onSubmit() should call authService.login with form values FAILED[39m
+	Error: 3 timer(s) still in the queue.
+	    at UserContext.apply (node_modules/zone.js/fesm2015/zone-testing.js:1719:27)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2081:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+........
+[31mChrome Headless 145.0.0.0 (Windows 10) SavedJobsComponent unsaveJob() should keep remaining jobs after unsave FAILED[39m
+	Error: 3 timer(s) still in the queue.
+	    at UserContext.apply (node_modules/zone.js/fesm2015/zone-testing.js:1719:27)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2081:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+WARN: [36m'Navigation triggered outside Angular zone, did you forget to call 'ngZone.run()'?'[39m
+[31mChrome Headless 145.0.0.0 (Windows 10) SavedJobsComponent unsaveJob() should remove job from savedJobs list after unsave FAILED[39m
+	Error: 3 timer(s) still in the queue.
+	    at UserContext.apply (node_modules/zone.js/fesm2015/zone-testing.js:1719:27)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2081:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+..
+[31mChrome Headless 145.0.0.0 (Windows 10) Employer DashboardComponent duplicateJob() should call postJob with title containing (Copy) FAILED[39m
+	Error: 3 timer(s) still in the queue.
+	    at UserContext.apply (node_modules/zone.js/fesm2015/zone-testing.js:1719:27)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2081:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+............................................................
+[31mChrome Headless 145.0.0.0 (Windows 10) Seeker ProfileComponent saveProfile() should call profileService.updateProfile FAILED[39m
+	Error: 3 timer(s) still in the queue.
+	    at UserContext.apply (node_modules/zone.js/fesm2015/zone-testing.js:1719:27)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2081:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+[31mChrome Headless 145.0.0.0 (Windows 10) Seeker ProfileComponent saveProfile() should set isEditing = false on success FAILED[39m
+	Error: 3 timer(s) still in the queue.
+	    at UserContext.apply (node_modules/zone.js/fesm2015/zone-testing.js:1719:27)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2081:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+.........................
+[31mChrome Headless 145.0.0.0 (Windows 10) RegisterComponent onSubmit() should include otpCode in register payload when all conditions met FAILED[39m
+	Error: 3 timer(s) still in the queue.
+	    at UserContext.apply (node_modules/zone.js/fesm2015/zone-testing.js:1719:27)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2081:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+.
+WARN: [36m'Navigation triggered outside Angular zone, did you forget to call 'ngZone.run()'?'[39m
+...
+[31mChrome Headless 145.0.0.0 (Windows 10) RegisterComponent sendOtp() should set isSendingOtp to false and otpSent stays false on error FAILED[39m
+	Error: 2 timer(s) still in the queue.
+	    at UserContext.apply (node_modules/zone.js/fesm2015/zone-testing.js:1719:27)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2081:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+[31mChrome Headless 145.0.0.0 (Windows 10) RegisterComponent sendOtp() should call authService.sendOtp with valid email and start countdown FAILED[39m
+	Error: 3 timer(s) still in the queue.
+	    at UserContext.apply (node_modules/zone.js/fesm2015/zone-testing.js:1719:27)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2081:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+...........
+[31mChrome Headless 145.0.0.0 (Windows 10) PostJobComponent onSubmit() should set isLoading = false on error FAILED[39m
+	Error: 2 timer(s) still in the queue.
+	    at UserContext.apply (node_modules/zone.js/fesm2015/zone-testing.js:1719:27)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2081:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+[31mChrome Headless 145.0.0.0 (Windows 10) PostJobComponent onSubmit() should call jobService.postJob with employerId when form and skills are valid FAILED[39m
+	Error: 3 timer(s) still in the queue.
+	    at UserContext.apply (node_modules/zone.js/fesm2015/zone-testing.js:1719:27)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2081:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+....
+[31mChrome Headless 145.0.0.0 (Windows 10) Seeker DashboardComponent groupedNotifications getter should group notifications by type FAILED[39m
+	Expected undefined to be 2.
+	    at <Jasmine>
+	    at UserContext.apply (src/app/features/seeker/dashboard/dashboard.component.spec.ts:207:38)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2081:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+..
+WARN: [36m'Navigation triggered outside Angular zone, did you forget to call 'ngZone.run()'?'[39m
+........................................................
+Chrome Headless 145.0.0.0 (Windows 10): Executed 212 of 212[31m (12 FAILED)[39m (1.674 secs / 1.496 secs)
+Γ£ö Browser application bundle generation complete.
+Γ£ö Browser application bundle generation complete.

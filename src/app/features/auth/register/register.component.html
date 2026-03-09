@@ -1,0 +1,143 @@
+<section class="reg-shell" [class.dark-ui]="themeService.isDarkMode()">
+  <div class="reg-grid">
+    <aside class="reg-panel">
+      <p class="chip">Create Profile</p>
+      <h1>Start your career journey with RevHire</h1>
+      <p>Set up your account once and start matching with real opportunities faster.</p>
+      <div class="role-toggle">
+        <button class="btn" [class.active]="selectedRole === roles.JOB_SEEKER" type="button" (click)="setRole(roles.JOB_SEEKER)">Job Seeker</button>
+        <button class="btn" [class.active]="selectedRole === roles.EMPLOYER" type="button" (click)="setRole(roles.EMPLOYER)">Employer</button>
+      </div>
+
+      <div class="reg-visual">
+        <article class="visual-card">
+          <img
+            src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=900&q=80"
+            alt="Young professionals working on laptops"
+            loading="lazy" />
+          <div class="visual-caption">Create a standout profile and get discovered quickly.</div>
+        </article>
+        <article class="company-note">
+          <h3>Why Recruiters Prefer RevHire</h3>
+          <p>Verified profiles, skill-first matching, and direct employer communication improve shortlisting speed.</p>
+          <div class="company-stats">
+            <span><strong>3x</strong> faster screening</span>
+            <span><strong>95%</strong> profile completeness</span>
+            <span><strong>100%</strong> role-based matching</span>
+          </div>
+        </article>
+      </div>
+    </aside>
+
+    <div class="reg-card">
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label>Name</label>
+            <input class="form-control" formControlName="name" placeholder="Full name" />
+          </div>
+          <div class="col-md-6">
+            <label>Email</label>
+            <div class="input-group">
+              <input class="form-control" formControlName="email" placeholder="you@example.com" />
+              <button class="btn btn-outline-secondary" type="button" (click)="sendOtp()" [disabled]="isSendingOtp || otpCountdown>0">{{ isSendingOtp ? 'Sending...' : (otpCountdown>0 ? ('Resend ' + otpCountdown + 's') : 'Send OTP') }}</button>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label>Password</label>
+            <div class="input-group">
+              <input class="form-control" [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="Strong password" />
+              <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility()">{{ showPassword ? 'Hide' : 'Show' }}</button>
+            </div>
+            <small class="hint">Use 1 uppercase, 1 number, 1 special character.</small>
+          </div>
+
+          <div class="col-md-6">
+            <label>Confirm Password</label>
+            <input class="form-control" [type]="showPassword ? 'text' : 'password'" formControlName="confirmPassword" placeholder="Re-enter password" />
+            <small class="hint text-danger" *ngIf="registerForm.hasError('passwordMismatch') && registerForm.get('confirmPassword')?.value">
+              Passwords do not match.
+            </small>
+          </div>
+
+          <div class="col-md-6" *ngIf="otpSent">
+            <label>OTP Code</label>
+            <input class="form-control" [(ngModel)]="otpCode" [ngModelOptions]="{standalone:true}" maxlength="6" placeholder="6-digit OTP" />
+          </div>
+
+          <div class="col-md-6">
+            <label>Phone</label>
+            <input class="form-control" formControlName="phone" placeholder="Phone number" />
+          </div>
+          <div class="col-md-6">
+            <label>Location</label>
+            <input class="form-control" formControlName="location" placeholder="City" />
+          </div>
+
+          <div class="col-md-6" *ngIf="selectedRole === roles.EMPLOYER">
+            <label>Company Name</label>
+            <input class="form-control" formControlName="companyName" placeholder="Company" />
+          </div>
+          <div class="col-md-6" *ngIf="selectedRole === roles.EMPLOYER">
+            <label>Industry</label>
+            <input class="form-control" formControlName="industry" placeholder="Industry" />
+          </div>
+          <div class="col-md-6" *ngIf="selectedRole === roles.EMPLOYER">
+            <label>Company Size</label>
+            <input class="form-control" formControlName="companySize" placeholder="e.g. 50-200" />
+          </div>
+
+          <div class="col-md-6" *ngIf="selectedRole === roles.JOB_SEEKER">
+            <label>Total Experience (Years)</label>
+            <input type="number" class="form-control" formControlName="totalExperience" min="0" />
+          </div>
+          <div class="col-md-6" *ngIf="selectedRole === roles.JOB_SEEKER">
+            <label>Current Status</label>
+            <input class="form-control" formControlName="currentStatus" placeholder="Student / Working Professional" />
+          </div>
+
+          <div class="col-md-6">
+            <label>Security Question (optional)</label>
+            <select class="form-select" formControlName="securityQuestion">
+              <option value="">Select a question</option>
+              <option *ngFor="let q of securityQuestions" [value]="q">{{ q }}</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label>Security Answer (optional)</label>
+            <input class="form-control" formControlName="securityAnswer" placeholder="Your answer" />
+          </div>
+        </div>
+
+        <button class="btn btn-primary w-100 mt-4" [disabled]="isLoading || registerForm.invalid" type="submit">{{ isLoading ? 'Creating account...' : 'Create Account' }}</button>
+      </form>
+
+      <p class="foot">Already have an account? <a routerLink="/auth/login">Log in</a></p>
+
+      <section class="trusted-strip">
+        <h3>Top Companies Hiring Here</h3>
+        <div class="trusted-grid">
+          <article class="trusted-company">
+            <img src="/assets/logos/tcs.svg" alt="TCS logo" loading="lazy" />
+          </article>
+          <article class="trusted-company">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Infosys_logo.svg" alt="Infosys logo" loading="lazy" />
+          </article>
+          <article class="trusted-company">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Wipro_Primary_Logo_Color_RGB.svg" alt="Wipro logo" loading="lazy" />
+          </article>
+          <article class="trusted-company">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/43/Cognizant_logo_2022.svg" alt="Cognizant logo" loading="lazy" />
+          </article>
+          <article class="trusted-company">
+            <img src="/assets/logos/tech-mahindra.svg" alt="Tech Mahindra logo" loading="lazy" />
+          </article>
+          <article class="trusted-company">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Accenture.svg" alt="Accenture logo" loading="lazy" />
+          </article>
+        </div>
+      </section>
+    </div>
+  </div>
+</section>

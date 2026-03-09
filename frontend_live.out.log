@@ -1,0 +1,102 @@
+
+> rev-hire-frontend@0.0.0 start
+> ng serve
+
+Initial chunk files | Names                      |  Raw size
+styles.css          | styles                     | 275.39 kB | 
+scripts.js          | scripts                    | 106.68 kB | 
+polyfills.js        | polyfills                  |  88.09 kB | 
+main.js             | main                       |   5.85 kB | 
+chunk-GXDVMBQZ.js   | -                          |   3.13 kB | 
+chunk-M34D2KUN.js   | -                          |   2.43 kB | 
+
+                    | Initial total              | 481.56 kB
+
+Lazy chunk files    | Names                      |  Raw size
+chunk-C5VCRINI.js   | resume-builder-component   |  70.45 kB | 
+chunk-DLEDV72C.js   | job-list-component         |  58.82 kB | 
+chunk-KZW44JVE.js   | main-layout-component      |  51.88 kB | 
+chunk-6UGHMG5E.js   | profile-component          |  47.79 kB | 
+chunk-I66HVVUE.js   | dashboard-component        |  44.00 kB | 
+chunk-4XCVUA33.js   | job-detail-component       |  41.97 kB | 
+chunk-KIWI3YWW.js   | job-applicants-component   |  40.65 kB | 
+chunk-47XLOSGR.js   | home-component             |  34.02 kB | 
+chunk-URDME6VY.js   | dashboard-component        |  29.33 kB | 
+chunk-MMSZVKH3.js   | employer-profile-component |  25.67 kB | 
+chunk-4KHPO3RP.js   | post-job-component         |  21.20 kB | 
+chunk-GMFZ3XF4.js   | register-component         |  20.40 kB | 
+chunk-HVJ5PCXM.js   | chat-component             |  18.89 kB | 
+chunk-R34GDNKW.js   | login-component            |  14.65 kB | 
+chunk-O55DNK6G.js   | saved-jobs-component       |  12.96 kB | 
+...and 7 more lazy chunks files. Use "--verbose" to show all the files.
+
+Application bundle generation complete. [74.505 seconds]
+
+Watch mode enabled. Watching for file changes...
+  ➜  Local:   http://localhost:4200/
+Initial chunk files | Names          | Raw size
+main.js             | main           |  5.85 kB | 
+
+Lazy chunk files    | Names          | Raw size
+chunk-VILW2UVE.js   | home-component | 34.02 kB | 
+
+Application bundle generation complete. [28.820 seconds]
+
+Page reload sent to client(s).
+Initial chunk files | Names  |  Raw size
+styles.css          | styles | 275.39 kB | 
+
+Application bundle generation complete. [6.888 seconds]
+
+HMR update sent to client(s).
+Initial chunk files | Names          | Raw size
+main.js             | main           |  5.85 kB | 
+
+Lazy chunk files    | Names          | Raw size
+chunk-XFGJKIAC.js   | home-component | 36.24 kB | 
+
+Application bundle generation complete. [23.461 seconds]
+
+Page reload sent to client(s).
+Initial chunk files | Names          | Raw size
+main.js             | main           |  5.85 kB | 
+
+Lazy chunk files    | Names          | Raw size
+chunk-I7FZ6PLS.js   | home-component | 36.24 kB | 
+
+Application bundle generation complete. [11.673 seconds]
+
+Page reload sent to client(s).
+Initial chunk files | Names          | Raw size
+main.js             | main           |  5.85 kB | 
+
+Lazy chunk files    | Names          | Raw size
+chunk-KLPVD55X.js   | home-component | 35.79 kB | 
+
+Application bundle generation complete. [1.761 seconds]
+
+Page reload sent to client(s).
+Initial chunk files | Names          | Raw size
+main.js             | main           |  5.85 kB | 
+
+Lazy chunk files    | Names          | Raw size
+chunk-YHFWCAGG.js   | home-component | 35.89 kB | 
+
+Application bundle generation complete. [10.569 seconds]
+
+Page reload sent to client(s).
+Initial chunk files | Names          | Raw size
+main.js             | main           |  5.85 kB | 
+
+Lazy chunk files    | Names          | Raw size
+chunk-HZZJFES2.js   | home-component | 37.71 kB | 
+
+Application bundle generation complete. [1.492 seconds]
+
+Page reload sent to client(s).
+Initial chunk files | Names  |  Raw size
+styles.css          | styles | 275.48 kB | 
+
+Application bundle generation complete. [5.213 seconds]
+
+HMR update sent to client(s).

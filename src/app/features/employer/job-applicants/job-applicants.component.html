@@ -1,0 +1,217 @@
+<div class="container-fluid py-4 py-md-5 transition-colors" [class.bg-dark]="themeService.isDarkMode()"
+    [class.text-white]="themeService.isDarkMode()">
+
+    <!-- Back Button -->
+    <button (click)="goBack()"
+        class="btn btn-link text-secondary text-decoration-none d-flex align-items-center gap-2 p-0 mb-4 fw-medium small">
+        <svg style="width: 16px; height: 16px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Back to dashboard
+    </button>
+
+    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-5 gap-3">
+        <div>
+            <h1 class="display-6 fw-bold mb-1">
+                Applicants <span *ngIf="job">for {{ job.title }}</span>
+            </h1>
+            <p class="text-secondary mb-0">Review and manage candidates for this open position.</p>
+        </div>
+
+        <div class="d-flex align-items-center bg-transparent border rounded-pill px-3 py-1" style="max-width: 320px;"
+            [class.border-secondary]="themeService.isDarkMode()">
+            <svg style="width: 18px; height: 18px;" class="text-secondary me-2" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input type="text" [(ngModel)]="searchQuery" (input)="filterApplicants()"
+                class="form-control border-0 bg-transparent shadow-none"
+                placeholder="Search skills, experience, or name..." [class.text-white]="themeService.isDarkMode()" />
+            <button *ngIf="searchQuery" (click)="searchQuery = ''; filterApplicants()"
+                class="btn btn-link text-secondary p-0 border-0 ms-2">
+                <svg style="width: 16px; height: 16px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="mb-4 d-flex flex-wrap gap-2 align-items-center">
+        <span class="small text-secondary">Status filter:</span>
+        <select [(ngModel)]="selectedStatusFilter" (ngModelChange)="filterApplicants()"
+            class="form-select form-select-sm" style="max-width: 220px;">
+            <option value="">All</option>
+            <option [value]="appStatusEnum.APPLIED">Applied</option>
+            <option [value]="appStatusEnum.UNDER_REVIEW">Under Review</option>
+            <option [value]="appStatusEnum.SHORTLISTED">Shortlisted</option>
+            <option [value]="appStatusEnum.REJECTED">Rejected</option>
+            <option [value]="appStatusEnum.WITHDRAWN">Withdrawn</option>
+        </select>
+    </div>
+
+    <div *ngIf="!isLoading && filteredApplications.length > 0" class="card border-0 shadow-sm rounded-4 p-3 mb-4"
+        [class.bg-dark]="themeService.isDarkMode()" [class.border]="themeService.isDarkMode()"
+        [class.border-secondary]="themeService.isDarkMode()">
+        <div class="d-flex flex-wrap align-items-center gap-2">
+            <div class="form-check me-2">
+                <input class="form-check-input" type="checkbox" [checked]="allFilteredSelected"
+                    (change)="toggleSelectAllFiltered()">
+                <label class="form-check-label small">Select all</label>
+            </div>
+            <span class="small text-secondary me-2">Selected: {{ selectedCount }}</span>
+            <button class="btn btn-warning btn-sm" (click)="bulkUpdateStatus(appStatusEnum.UNDER_REVIEW)">Bulk
+                Review</button>
+            <button class="btn btn-success btn-sm" (click)="bulkUpdateStatus(appStatusEnum.SHORTLISTED)">Bulk
+                Shortlist</button>
+            <button class="btn btn-outline-danger btn-sm" (click)="bulkUpdateStatus(appStatusEnum.REJECTED)">Bulk
+                Reject</button>
+            <button class="btn btn-outline-secondary btn-sm" (click)="compareSelectedCandidates()">Compare 2</button>
+            <button class="btn btn-outline-primary btn-sm" (click)="exportApplicantsCsv()">Export CSV</button>
+        </div>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="isLoading" class="d-flex justify-content-center py-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && applications.length === 0"
+        class="card border-1 border-dashed p-5 text-center mt-4 bg-transparent"
+        [class.border-secondary]="themeService.isDarkMode()">
+        <div class="card-body">
+            <svg class="mx-auto text-secondary opacity-50 mb-3" style="width: 48px; height: 48px;" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 4.354l8 8v7m-16-7l1.354-1.354m13.292-13.292L5.646 19.354" />
+            </svg>
+            <h3 class="h5 fw-medium mb-2" [class.text-white]="themeService.isDarkMode()">No applicants yet</h3>
+            <p class="text-secondary mb-0">Applications will appear here once candidates apply.</p>
+        </div>
+    </div>
+
+    <!-- Candidates Grid -->
+    <div *ngIf="!isLoading && filteredApplications.length > 0" class="row g-4">
+        <div *ngFor="let app of filteredApplications" class="col-md-6 col-lg-4">
+
+            <div class="card border-0 shadow-sm rounded-4 h-100 border-top border-4 transition-transform "
+                style="transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'"
+                onmouseout="this.style.transform='translateY(0)'" [ngClass]="{
+                    'border-primary': app.status === appStatusEnum.APPLIED,
+                    'border-warning': app.status === appStatusEnum.UNDER_REVIEW,
+                    'border-success': app.status === appStatusEnum.SHORTLISTED,
+                    'border-danger': app.status === appStatusEnum.REJECTED,
+                    'border-secondary': app.status === appStatusEnum.WITHDRAWN
+                 }" [class.bg-dark]="themeService.isDarkMode()" [class.text-white]="themeService.isDarkMode()">
+
+                <div class="card-body p-4 d-flex flex-column border-bottom"
+                    [class.border-secondary]="themeService.isDarkMode()">
+                    <div class="d-flex justify-content-end mb-2">
+                        <input type="checkbox" [checked]="selectedApplicationIds.has(app.id)"
+                            (change)="toggleSelection(app.id)">
+                    </div>
+                    <div class="mb-3">
+                        <h3 class="h5 fw-bold mb-1">{{ app.seekerName }}</h3>
+                        <p class="small text-secondary fw-medium mb-0 d-flex align-items-center gap-2">
+                            <svg style="width: 16px; height: 16px;" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                            <a href="mailto:{{ app.seekerEmail }}"
+                                class="text-decoration-none text-secondary hover-primary transition-colors"
+                                [class.text-light]="themeService.isDarkMode()">{{ app.seekerEmail }}</a>
+                        </p>
+                    </div>
+
+                    <div class="mb-3">
+                        <span class="badge rounded-pill fw-normal px-3 py-1" [ngClass]="{
+                                'text-bg-primary': app.status === appStatusEnum.APPLIED,
+                                'text-bg-warning': app.status === appStatusEnum.UNDER_REVIEW,
+                                'text-bg-success': app.status === appStatusEnum.SHORTLISTED,
+                                'text-bg-danger': app.status === appStatusEnum.REJECTED,
+                                'text-bg-secondary': app.status === appStatusEnum.WITHDRAWN
+                            }" style="font-size: 0.75rem;">
+                            {{ app.status === 'UNDER_REVIEW' ? 'Under Review' : app.status === 'APPLIED' ? 'Applied' :
+                            app.status === 'SHORTLISTED' ? 'Shortlisted' : app.status === 'REJECTED' ? 'Rejected' :
+                            'Withdrawn' }}
+                        </span>
+                    </div>
+
+                    <div class="small text-secondary flex-grow-1">
+                        Applied: {{ app.appliedAt | date:'mediumDate' }}
+                    </div>
+                </div>
+
+                <!-- Actions Footer -->
+                <div class="card-footer bg-transparent border-0 p-4 pt-3"
+                    *ngIf="app.status !== appStatusEnum.WITHDRAWN">
+
+                    <div class="d-flex gap-2 mb-3">
+                        <button (click)="viewCoverLetter(app)"
+                            class="btn btn-outline-secondary btn-sm w-100 rounded-pill fw-medium text-truncate">
+                            View Details
+                        </button>
+                        <button (click)="openChatWithApplicant(app)"
+                            class="btn btn-outline-primary btn-sm w-100 rounded-pill fw-medium text-truncate">
+                            Message
+                        </button>
+                        <button (click)="manageNotes(app)"
+                            class="btn btn-sm w-100 rounded-pill fw-medium text-truncate"
+                            [ngClass]="themeService.isDarkMode() ? 'btn-outline-light' : 'btn-outline-dark'">
+                            Notes
+                        </button>
+                        <button *ngIf="app.resumeFileId" (click)="downloadResume(app)"
+                            class="btn btn-outline-primary btn-sm w-100 rounded-pill fw-medium text-truncate">
+                            <i class="bi bi-download me-1"></i>Resume
+                        </button>
+                    </div>
+
+                    <ng-container *ngIf="app.status === appStatusEnum.APPLIED">
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <button (click)="updateStatus(app, appStatusEnum.UNDER_REVIEW)"
+                                    class="btn btn-warning btn-sm w-100 rounded-pill fw-medium text-dark border-0">
+                                    Review
+                                </button>
+                            </div>
+                            <div class="col-6">
+                                <button (click)="updateStatus(app, appStatusEnum.REJECTED)"
+                                    class="btn btn-outline-danger btn-sm w-100 rounded-pill fw-medium border-2">
+                                    Reject
+                                </button>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="app.status === appStatusEnum.UNDER_REVIEW">
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <button (click)="updateStatus(app, appStatusEnum.SHORTLISTED)"
+                                    class="btn btn-success btn-sm w-100 rounded-pill fw-medium text-white border-0">
+                                    Shortlist
+                                </button>
+                            </div>
+                            <div class="col-6">
+                                <button (click)="updateStatus(app, appStatusEnum.REJECTED)"
+                                    class="btn btn-outline-danger btn-sm w-100 rounded-pill fw-medium border-2">
+                                    Reject
+                                </button>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+
+                <div class="card-footer bg-transparent border-0 p-4 pt-3 text-center small text-secondary"
+                    *ngIf="app.status === appStatusEnum.WITHDRAWN">
+                    Applicant withdrew on {{ app.updatedAt | date:'mediumDate' }}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>

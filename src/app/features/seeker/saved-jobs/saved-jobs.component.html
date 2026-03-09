@@ -1,0 +1,113 @@
+<div class="container py-4 py-md-5 transition-colors" [class.bg-dark]="themeService.isDarkMode()"
+    [class.text-white]="themeService.isDarkMode()">
+
+    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-5 gap-3">
+        <div>
+            <h1 class="display-6 fw-bold mb-1">Saved Jobs</h1>
+            <p class="text-secondary mb-0">Jobs you have bookmarked for later.</p>
+        </div>
+        <div>
+            <a routerLink="/jobs" class="btn btn-primary px-4 py-2 fw-medium rounded-pill">Browse Jobs</a>
+        </div>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="isLoading" class="d-flex justify-content-center py-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && savedJobs.length === 0"
+        class="card border-1 border-dashed p-5 text-center mt-4 bg-transparent"
+        [class.border-secondary]="themeService.isDarkMode()">
+        <div class="card-body">
+            <svg class="mx-auto text-secondary opacity-50 mb-3" style="width: 48px; height: 48px;" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+            </svg>
+            <h3 class="h5 fw-medium mb-2" [class.text-white]="themeService.isDarkMode()">No saved jobs</h3>
+            <p class="text-secondary mb-0">Save jobs to easily find them later and apply.</p>
+        </div>
+    </div>
+
+    <!-- Jobs Grid -->
+    <div *ngIf="!isLoading && savedJobs.length > 0" class="row g-4">
+        <div *ngFor="let job of savedJobs" class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm rounded-4 border-start border-4 border-primary transition-transform"
+                style="transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'"
+                onmouseout="this.style.transform='translateY(0)'" [class.bg-dark]="themeService.isDarkMode()"
+                [class.border]="themeService.isDarkMode()" [class.text-white]="themeService.isDarkMode()">
+
+                <div class="card-body p-4 d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="pe-3">
+                            <h3 class="h6 fw-bold mb-1">
+                                <a [routerLink]="['/jobs', job.id]"
+                                    class="text-decoration-none text-body transition-colors"
+                                    [class.text-white]="themeService.isDarkMode()">
+                                    {{ job.title }}
+                                </a>
+                            </h3>
+                            <p class="small text-secondary fw-medium mb-0">{{ job.companyName }}</p>
+                        </div>
+
+                        <!-- Unsave Button -->
+                        <button (click)="unsaveJob(job.id)"
+                            class="btn btn-light rounded-circle p-2 d-flex align-items-center justify-content-center text-secondary hover-danger border-0 flex-shrink-0"
+                            [class.bg-secondary]="themeService.isDarkMode()"
+                            [class.bg-opacity-25]="themeService.isDarkMode()" title="Remove from saved">
+                            <svg style="width: 20px; height: 20px;" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="d-flex flex-wrap gap-3 mb-4 text-secondary small">
+                        <span class="d-flex align-items-center gap-1.5">
+                            <svg class="text-secondary" style="width: 16px; height: 16px;" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            </svg>
+                            {{ job.location }}
+                        </span>
+                        <span class="d-flex align-items-center gap-1.5">
+                            <svg class="text-secondary" style="width: 16px; height: 16px;" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                            {{ job.jobType.replace('_', ' ') }}
+                        </span>
+                    </div>
+
+                    <div class="mt-4 d-flex flex-wrap gap-2">
+                        <span class="badge badge-soft-primary px-3 py-2 rounded-pill">{{ job.jobType.replace('_', ' ')
+                            }}</span>
+                        <span *ngFor="let skill of (job.skills || []).slice(0, 3)"
+                            class="badge badge-soft-secondary px-3 py-2 rounded-pill">
+                            {{ skill }}
+                        </span>
+                        <span *ngIf="(job.skills || []).length > 3"
+                            class="badge badge-soft-secondary px-3 py-2 rounded-pill">
+                            +{{ job.skills.length - 3 }} more
+                        </span>
+                    </div>
+
+                    <div class="pt-3 border-top mt-auto d-flex justify-content-between align-items-center"
+                        [class.border-secondary]="themeService.isDarkMode()">
+                        <a [routerLink]="['/jobs', job.id]" class="text-primary text-decoration-none small fw-medium">
+                            View Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

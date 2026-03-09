@@ -1,0 +1,190 @@
+<div class="container py-4 py-md-5 transition-colors" style="max-width: 900px;"
+    [class.bg-dark]="themeService.isDarkMode()" [class.text-white]="themeService.isDarkMode()">
+
+    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-5 gap-3">
+        <div>
+            <h2 class="display-6 fw-bold mb-1">Company Profile</h2>
+            <p class="text-secondary mb-0">Manage your company information and employer details.</p>
+        </div>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="isLoading" class="d-flex justify-content-center py-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <div *ngIf="!isLoading && profile" class="d-flex flex-column gap-4">
+
+        <!-- Profile Card -->
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden" [class.bg-dark]="themeService.isDarkMode()"
+            [class.border]="themeService.isDarkMode()" [class.border-secondary]="themeService.isDarkMode()"
+            [class.text-white]="themeService.isDarkMode()">
+
+            <div class="card-header bg-transparent border-bottom p-4 d-flex justify-content-between align-items-center"
+                [class.border-secondary]="themeService.isDarkMode()">
+                <h3 class="h5 fw-bold mb-0">Contact Information</h3>
+                <div class="d-flex align-items-center gap-3">
+                    <button (click)="changePassword()"
+                        class="btn btn-link text-secondary text-decoration-none p-0 fw-medium small">
+                        Change Password
+                    </button>
+                    <button (click)="toggleEdit()"
+                        class="btn btn-link text-primary text-decoration-none p-0 fw-medium small">
+                        {{ isEditing ? 'Cancel' : 'Edit Profile' }}
+                    </button>
+                </div>
+            </div>
+
+            <!-- View Mode -->
+            <div *ngIf="!isEditing" class="card-body p-4 p-md-5">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <p class="small text-secondary fw-medium mb-1">Full Name</p>
+                        <p class="mb-0 fs-6">{{ profile.name }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="small text-secondary fw-medium mb-1">Email Address</p>
+                        <p class="mb-0 fs-6">{{ profile.email }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="small text-secondary fw-medium mb-1">Phone Number</p>
+                        <p class="mb-0 fs-6">{{ profile.phone || 'Not provided' }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="small text-secondary fw-medium mb-1">Location</p>
+                        <p class="mb-0 fs-6">{{ profile.location || 'Not provided' }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Mode -->
+            <div *ngIf="isEditing" class="card-body p-4 p-md-5">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <label class="form-label small fw-medium">Full Name</label>
+                        <input type="text" [(ngModel)]="editData.name" class="form-control"
+                            [class.bg-dark]="themeService.isDarkMode()" [class.text-white]="themeService.isDarkMode()"
+                            [class.border-secondary]="themeService.isDarkMode()" />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-medium">Phone Number</label>
+                        <input type="text" [(ngModel)]="editData.phone" class="form-control"
+                            [class.bg-dark]="themeService.isDarkMode()" [class.text-white]="themeService.isDarkMode()"
+                            [class.border-secondary]="themeService.isDarkMode()" />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-medium">Location</label>
+                        <input type="text" [(ngModel)]="editData.location" class="form-control"
+                            [class.bg-dark]="themeService.isDarkMode()" [class.text-white]="themeService.isDarkMode()"
+                            [class.border-secondary]="themeService.isDarkMode()" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Company Info Card -->
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden" [class.bg-dark]="themeService.isDarkMode()"
+            [class.border]="themeService.isDarkMode()" [class.border-secondary]="themeService.isDarkMode()"
+            [class.text-white]="themeService.isDarkMode()">
+
+            <div class="card-header bg-transparent border-bottom p-4"
+                [class.border-secondary]="themeService.isDarkMode()">
+                <h3 class="h5 fw-bold mb-0">Company Information</h3>
+            </div>
+
+            <!-- View Mode -->
+            <div *ngIf="!isEditing" class="card-body p-4 p-md-5">
+                <div class="d-flex align-items-center gap-3 mb-4 pb-3 border-bottom"
+                    [class.border-secondary]="themeService.isDarkMode()">
+                    <img [src]="getCompanyLogoUrl()" (error)="onCompanyLogoError($event)"
+                        [alt]="getDisplayCompanyName() + ' logo'" class="rounded-3 border"
+                        [class.border-secondary]="themeService.isDarkMode()"
+                        style="width: 64px; height: 64px; object-fit: cover;" />
+                    <div>
+                        <p class="small text-secondary fw-medium mb-1">Company</p>
+                        <p class="mb-0 fw-semibold">{{ getDisplayCompanyName() }}</p>
+                    </div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <p class="small text-secondary fw-medium mb-1">Company Name</p>
+                        <p class="mb-0 fs-6">{{ profile.companyName || 'Not provided' }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="small text-secondary fw-medium mb-1">Industry</p>
+                        <p class="mb-0 fs-6">{{ profile.industry || 'Not provided' }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="small text-secondary fw-medium mb-1">Company Size</p>
+                        <p class="mb-0 fs-6">{{ profile.companySize || 'Not provided' }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="small text-secondary fw-medium mb-1">Website</p>
+                        <p class="mb-0 fs-6">
+                            <a *ngIf="getWebsiteUrl() as site" [href]="site" target="_blank" rel="noopener noreferrer"
+                                class="text-primary text-decoration-none small">{{ site }}</a>
+                            <span *ngIf="!getWebsiteUrl()">Not provided</span>
+                        </p>
+                    </div>
+                    <div class="col-12">
+                        <p class="small text-secondary fw-medium mb-1">Description</p>
+                        <p class="mb-0 fs-6" style="white-space: pre-wrap;">{{ profile.description || 'Not provided' }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Mode -->
+            <div *ngIf="isEditing" class="card-body p-4 p-md-5">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <label class="form-label small fw-medium">Company Name</label>
+                        <input type="text" [(ngModel)]="editData.companyName" class="form-control"
+                            [class.bg-dark]="themeService.isDarkMode()" [class.text-white]="themeService.isDarkMode()"
+                            [class.border-secondary]="themeService.isDarkMode()" />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-medium">Industry</label>
+                        <input type="text" [(ngModel)]="editData.industry" class="form-control"
+                            [class.bg-dark]="themeService.isDarkMode()" [class.text-white]="themeService.isDarkMode()"
+                            [class.border-secondary]="themeService.isDarkMode()" />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-medium">Company Size</label>
+                        <select [(ngModel)]="editData.companySize" class="form-select"
+                            [class.bg-dark]="themeService.isDarkMode()" [class.text-white]="themeService.isDarkMode()"
+                            [class.border-secondary]="themeService.isDarkMode()">
+                            <option value="">Select size...</option>
+                            <option value="1-10">1–10 employees</option>
+                            <option value="11-50">11–50 employees</option>
+                            <option value="51-200">51–200 employees</option>
+                            <option value="201-500">201–500 employees</option>
+                            <option value="500+">500+ employees</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-medium">Website</label>
+                        <input type="url" [(ngModel)]="editData.website" class="form-control"
+                            placeholder="https://example.com" [class.bg-dark]="themeService.isDarkMode()"
+                            [class.text-white]="themeService.isDarkMode()"
+                            [class.border-secondary]="themeService.isDarkMode()" />
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label small fw-medium">Company Description</label>
+                        <textarea [(ngModel)]="editData.description" class="form-control" rows="4"
+                            placeholder="Brief company overview..." [class.bg-dark]="themeService.isDarkMode()"
+                            [class.text-white]="themeService.isDarkMode()"
+                            [class.border-secondary]="themeService.isDarkMode()"></textarea>
+                    </div>
+                    <div class="col-12 d-flex justify-content-end mt-4 pt-3 border-top"
+                        [class.border-secondary]="themeService.isDarkMode()">
+                        <button (click)="saveProfile()" class="btn btn-primary px-4 rounded-3">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
